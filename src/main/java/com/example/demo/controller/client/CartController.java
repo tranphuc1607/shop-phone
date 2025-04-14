@@ -1,12 +1,12 @@
-package com.example.demo.controller.admin;
+package com.example.demo.controller.client;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class DashboardController {
-    @GetMapping("/admin/dashboard")
+public class CartController {
+    @GetMapping("/homepage/order")
     public String getOrder() {
-        return "admin/dashboard/showInterface";
+        return "client/order/interface";
     }
 }
