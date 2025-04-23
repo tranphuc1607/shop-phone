@@ -12,12 +12,21 @@ import com.example.demo.service.UserFindAllService;
 
 @Controller
 public class UserController {
-	
-	private final UserFindAllService service  = new UserFindAllService();
+
+	private final UserFindAllService userFindAllService;
+    
+    
+    public UserController(UserFindAllService userFindAllService) {
+        this.userFindAllService = userFindAllService;
+    }
+
     @GetMapping("/admin/user")
     public String getAllUser(Model model) throws SQLException {
-    	List<User> users = service.getAllUser();
+    	List<User> users = userFindAllService.getAllUser();
     	model.addAttribute("users", users);
         return "admin/user/users";
     }
+
+
+    
 }
