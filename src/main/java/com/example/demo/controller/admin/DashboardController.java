@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DashboardController {
-    @GetMapping("/admin/dashboard")
+    @GetMapping("admin/dashboard")
     public String getOrder() {
         return "admin/dashboard/showInterface";
     }

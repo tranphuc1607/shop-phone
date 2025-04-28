@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.repository.UserResponsitory;
-import com.example.demo.service.UserFindAllService;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 
 
 @Configuration

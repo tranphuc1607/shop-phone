@@ -13,7 +13,7 @@ import com.example.demo.config.ConnectionPoolImlp;
 import com.example.demo.entity.User;
 
 @Repository
-public class UserResponsitory { 
+public class UserRepository { 
 	// tìm tất cả người dungg
 	public List<User> findAll() throws SQLException{
 		List<User> users = new ArrayList<>();

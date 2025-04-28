@@ -3,7 +3,7 @@
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
         <header class=" w-full h-[110px] bg-white flex lg:px-[175px] md:px-[100px] sm:px-[70px] px-[20px] justify-between items-center border-b-2">
-            <a href = "/homepage" class = "text-[50px] font-bold text-[#79CDCD] drop-shadow-xl">ShopPhone</a>
+            <a href = "/homepage" class = "text-[30px] font-bold text-[#79CDCD] drop-shadow-xl">ShopPhone</a>
             <div class ="w-[250px] h-[60px] flex md:justify-between lg:justify-between md:justify-end justify-end  item-center leading-[60px] ">
                 <a class = "hidden lg:block md:block text-[#2F4F4F] font-bold hover:text-red-500" href = "/homepage">Trang chủ</a>
                 <a class = "hidden lg:block md:block text-[#2F4F4F] font-bold hover:text-red-500" href = "/product">Sản phẩm</a>
