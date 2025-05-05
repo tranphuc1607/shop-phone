@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.multipart.MultipartFile;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -113,16 +113,15 @@ public class UserController {
 
 
     @GetMapping("/admin/user/delete/{id}")
-    public String getDeleteUserPage(Model model, @PathVariable int id) throws SQLException {
-        User currentUser = this.userService.getUserById(id);
-        model.addAttribute("user", currentUser);
-        model.addAttribute("id", id);
-        return "admin/user/delete";
+    public String getDeleteUserPage(RedirectAttributes redirectAttributes, @PathVariable int id) throws SQLException {
+        userService.deleteUser(id);
+	    redirectAttributes.addFlashAttribute("success", "Xóa thành công!");
+	    return "redirect:/admin/user";
     }
-
+/*
     @PostMapping("/admin/user/delete")
     public String deleteUser(@ModelAttribute User currentUser) throws SQLException {
         this.userService.deleteUser(currentUser.getId());
         return "redirect:/admin/user";
-    }
+    } */
 }

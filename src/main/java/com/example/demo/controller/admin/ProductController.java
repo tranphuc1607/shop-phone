@@ -26,9 +26,9 @@ public class ProductController {
     public ProductController (ProductService productService) {
         this.productService =productService;
     }
-    @GetMapping("admin/product")
+    @GetMapping("/admin/product")
     public String getProduct() {
-        return "/admin/product/showInterface";
+        return "admin/product/showInterface";
     }
       @GetMapping("/admin/product/create")
     public String getCreateProductPage(Model model) throws SQLException {

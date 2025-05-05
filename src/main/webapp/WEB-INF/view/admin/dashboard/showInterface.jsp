@@ -188,10 +188,10 @@
                 const chart1 = new Chart(ctx1, {
                     type: 'line',
                     data: {
-                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6','T7'],
                     datasets: [{
                         label: 'Total page view',
-                        data: [120, 190, 300, 500, 200, 300],
+                        data:  [1000, 2000, 1500, 3000, 2500, 2000,500],
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: '#4bc0c0',
                         borderWidth: 2,
@@ -211,10 +211,10 @@
                 const chart2 = new Chart(ctx2, {
                     type: 'bar',
                     data: {
-                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6','T7'],
                     datasets: [{
                         label: 'Total Users',
-                        data: [50, 60, 80, 100, 90, 120],
+                        data:  [1000, 2000, 1500, 3000, 2500, 4000,500],
                         backgroundColor: '#36A2EB',
                         borderWidth: 1
                     }]
@@ -230,10 +230,10 @@
             const chart3 = new Chart(ctx3, {
                 type: 'bar',
                 data: {
-                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6','T7'],
                 datasets: [{
                     label: 'Total Oders',
-                    data: [20, 40, 60, 80, 100, 120],
+                    data:  [1000, 2000, 1500, 3000, 2500, 4000,500],
                     backgroundColor: '#FF6384',
                     borderWidth: 1
                 }]
@@ -249,10 +249,10 @@
             const chart4 = new Chart(ctx4, {
                 type: 'line',
                 data: {
-                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6','T7'],
                 datasets: [{
                     label: 'Total Sales',
-                    data: [1000, 2000, 1500, 3000, 2500, 4000],
+                    data: [1000, 2000, 1500, 3000, 2500, 4000,500 ],
                     backgroundColor: 'rgba(255, 206, 86, 0.2)',
                     borderColor: '#FFCE56',
                     borderWidth: 2,

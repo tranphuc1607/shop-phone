@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Đăng nhập</title>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100" style="background: linear-gradient(90deg, #E0F7FA, #B3E5FC, #81D4FA, #4FC3F7, #29B6F6);" >
 
 <div class="max-w-md mx-auto mt-16 p-8 bg-white shadow-lg rounded-lg">
     <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Đăng nhập tài khoản</h2>
