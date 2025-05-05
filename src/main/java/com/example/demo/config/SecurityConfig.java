@@ -1,39 +1,61 @@
-// package com.example.demo.config;
+package com.example.demo.config;
 
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import org.springframework.security.web.SecurityFilterChain;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-// @Configuration
-// public class SecurityConfig {
+@Configuration
+public class SecurityConfig {
 
-//     @Bean
-//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//         http
-//             .authorizeHttpRequests(authorize -> authorize
-//                 .requestMatchers("/admin/**").hasRole("ADMIN")   // Chặn URL /admin phải ADMIN mới vào
-//                 .anyRequest().permitAll()                       // Các URL khác thì ai cũng truy cập được
-//             )
-//             .formLogin(form -> form
-//                 .loginPage("/login")          // Trang login custom
-//                 .defaultSuccessUrl("/")        // Login thành công về trang chủ
-//                 .permitAll()
-//             )
-//             .logout(logout -> logout
-//                 .logoutUrl("/logout")
-//                 .logoutSuccessUrl("/login?logout")
-//                 .permitAll()
-//             )
-//             .csrf(csrf -> csrf.disable()); // Disable CSRF nếu đang phát triển (sản phẩm thật nên bật lại)
+	@SuppressWarnings("unused")
+	private final UserDetailsService userDetailsService;
 
-//         return http.build();
-//     }
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-//     @Bean
-//     public PasswordEncoder passwordEncoder() {
-//         return new BCryptPasswordEncoder();
-//     }
-// }
+    // Mã hóa mật khẩu / so khớp
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // Cấu hình authentication
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    // Cấu hình HTTP Security
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+        	.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/register","/homepage","/WEB-INF/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form.disable())
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            )
+            .sessionManagement(sess -> sess
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+            );
+
+
+        return http.build();
+    }
+}

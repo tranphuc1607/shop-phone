@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.example.demo.entity.User;
+//import com.example.demo.entity.User;
 
 @Configuration
 @EnableWebMvc

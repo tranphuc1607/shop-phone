@@ -15,7 +15,10 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    public User getUserByEmail (String Email) throws SQLException {
+    	User user = userRepository.findByEmail(Email);
+    	return user;
+    }
     public List<User> getAllUser() throws SQLException {
         return this.userRepository.findAll();
     }

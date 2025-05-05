@@ -9,8 +9,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class RegisterController {
-    @GetMapping("/login")
-    public String getLoginPage() {
-        return "client/auth/login";
-    }
+    
 }

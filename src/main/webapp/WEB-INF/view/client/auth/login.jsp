@@ -1,54 +1,61 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LaptopShop</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <title>Đăng nhập</title>
 </head>
+<body class="bg-gray-100">
 
-<body class="min-h-screen flex items-center justify-center bg-blue-500">
-    <div class="w-full max-w-md">
-        <div class="bg-white shadow-md rounded-lg p-8">
-            <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-            <form method="post" action="/login">
-                <c:if test="${param.error != null}">
-                    <div class="text-red-600 text-sm mb-4">Invalid email or password</div>
-                </c:if>
-                <c:if test="${param.logout != null}">
-                    <div class="text-green-600 text-sm mb-4">Logout success</div>
-                </c:if>
+<div class="max-w-md mx-auto mt-16 p-8 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Đăng nhập tài khoản</h2>
 
-                <div class="mb-4">
-                    <label for="inputEmail" class="block text-gray-700">Email address</label>
-                    <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" 
-                        id="inputEmail" type="email" name="username" placeholder="name@example.com" />
-                </div>
-
-                <div class="mb-4">
-                    <label for="inputPassword" class="block text-gray-700">Password</label>
-                    <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" 
-                        id="inputPassword" type="password" name="password" placeholder="Password" />
-                </div>
-
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-                <div class="mt-6">
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                        Login
-                    </button>
-                </div>
-            </form>
-
-            <div class="mt-4 text-center">
-                <a href="/register" class="text-blue-600 hover:underline text-sm">Need an account? Sign up!</a>
-            </div>
+    <form action="/login" method="post" class="space-y-4">
+        <div>
+            <label class="block mb-1 font-medium">Email</label>
+            <input type="text" name="username"
+                   class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                   placeholder="Nhập email của bạn">
         </div>
-    </div>
-</body>
 
+        <div>
+            <label class="block mb-1 font-medium">Mật khẩu</label>
+            <input type="password" name="password"
+                   class="w-full px-3 py-2 border rounded-lg"
+                   placeholder="Nhập mật khẩu">
+        </div>
+
+        <c:if test="${not empty AuthenError}">
+            <p class="text-red-500 text-sm ${not empty error} ? 'hidden' : ''}">
+            	${AuthenError}
+            </p>
+        </c:if>
+		<c:if test="${not empty EmailError}">
+            <p class="text-red-500 text-sm ${not empty error} ? 'hidden' : ''}">
+            	${EmailError}
+            </p>
+        </c:if>
+        <c:if test="${not empty SystemError}">
+            <p class="text-red-500 text-sm ${not empty error} ? 'hidden' : ''}">
+            	${SystemError }
+            </p>
+        </c:if>
+        <div class="text-center">
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg">
+                Đăng nhập
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center text-sm">
+        Chưa có tài khoản?
+        <a href="/register" class="text-blue-600 hover:underline">Đăng ký ngay</a>
+    </div>
+</div>
+
+</body>
 </html>

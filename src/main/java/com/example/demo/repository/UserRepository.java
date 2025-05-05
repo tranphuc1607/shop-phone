@@ -63,7 +63,42 @@ public class UserRepository {
 
         return users;
     }
-
+    // Tìm người dùng theo email
+    public User findByEmail(String email) throws SQLException {
+		Connection connection = null;
+		try {
+			ConnectionPoolImlp pool = ConnectionPoolImlp.getInstance();
+			connection = pool.getConnection();
+			String sql = "SELECT * FROM users WHERE email = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			ResultSet rs = ps.executeQuery();
+			pool.releaseConnection(connection);
+			if (rs.next()) {
+				 User user = new User();
+		            user.setId( Integer.parseInt( rs.getString("id")));
+		            user.setEmail(rs.getString("email"));
+		            user.setPassword(rs.getString("password"));
+		            user.setName(rs.getString("name"));
+		            user.setRole(rs.getString("role"));
+		            user.setAddress(rs.getString("address"));
+		            user.setPhone(rs.getString("phone"));
+		            user.setCreatedAt(rs.getString("created_at"));
+		            return user;
+			}
+			
+		} catch (Exception e) {
+			if (connection != null) {
+				ConnectionPoolImlp.getInstance().releaseConnection(connection);
+			}
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				ConnectionPoolImlp.getInstance().releaseConnection(connection);
+			}
+		}
+		return null;
+	}
     // Tìm người dùng theo ID
     public User findUserById(int id) throws SQLException {
         User user = null;
