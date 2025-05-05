@@ -3,6 +3,11 @@ package com.example.demo.entity;
 //import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.demo.service.validator.user.Valid.ValidEmailUser;
+import com.example.demo.service.validator.user.Valid.ValidPasswordUser;
+import com.example.demo.service.validator.user.Valid.ValidNameUser.ValidName;
+import com.example.demo.service.validator.user.Valid.ValidPhoneUser.ValidPhone;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,20 +15,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+	
+	@ValidName
     @Column(nullable = false, columnDefinition = "VARCHAR(100)")
     private String name;
-    @Column(unique = true, nullable = false, columnDefinition = "VARCHAR(150)")
+    @Column(columnDefinition = "VARCHAR(150)")
+	@ValidEmailUser
     private String email;
-    @Column(columnDefinition = "VARCHAR(1000)", name = "password_hash")
-    private String passwordHash;
+    @Column(columnDefinition = "VARCHAR(1000)", name = "password")
+	@ValidPasswordUser
+    private String password;
     @Column(columnDefinition = "VARCHAR(20)")
+	@ValidPhone
     private String phone;
     @Column(columnDefinition = "TEXT(10000)")
     private String address;
@@ -52,11 +63,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPasswordHash() {
-		return passwordHash;
+	public String getPassword() {
+		return password;
 	}
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getPhone() {
 		return phone;
@@ -92,21 +103,6 @@ public class User {
 		return orders;
 	}
 	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-	
-	//Constructor
-	public User(String name, String email, String passwordHash, String phone, String address, String role,
-			String createdAt, List<Cart> carts, List<Order> orders) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.passwordHash = passwordHash;
-		this.phone = phone;
-		this.address = address;
-		this.role = role;
-		this.createdAt = createdAt;
-		this.carts = carts;
 		this.orders = orders;
 	}
 	

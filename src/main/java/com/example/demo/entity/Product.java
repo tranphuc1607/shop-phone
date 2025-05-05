@@ -32,7 +32,7 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "product") private List<ProductImage> images;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) private List<ProductImage> images;
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private ProductSpecification specification;
 
@@ -42,6 +42,10 @@ public class Product {
     
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id =id; 
 	}
 	public String getName() {
 		return name;

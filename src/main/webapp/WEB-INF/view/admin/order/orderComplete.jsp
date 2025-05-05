@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
         <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
             <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -68,18 +68,17 @@
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
                 <main>
                     <div class="container mx-auto p-4">
-                        <h1 class="text-3xl font-bold text-orange-500 mb-4">MANAGE USERS</h1>
-                        <nav class="text-sm mb-6">
+                        <h1 class="text-3xl font-bold text-orange-500 mb-4">MANAGE ORDERS</h1>
+                        <nav class ="text-sm mb-6">
                           <ol class="list-reset flex text-gray-700">
-                            <li><a href="/admin/dashboard" class="hover:underline text-blue-500">Dashboard</a></li>
+                            <li><a href="/admin/dashboard" class="text-blue-500 hover:underline">Dashboard</a></li>
                             <li><span class="mx-2">/</span></li>
-                            <li>User</li>
+                            <li class="text-gray-500">Order</li>
                           </ol>
                         </nav>
                         <div class="mt-8">
-                          <div class="flex flex-col md:flex-row md:justify-between items-center mb-4">
-                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Table Users</h3>
-                              <a href="/admin/user/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create new Users</a>
+                          <div class="mb-4">
+                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Table Orders Complete</h3>
                           </div>
                           <hr class="mb-4 border-gray-300">
       
@@ -88,25 +87,25 @@
                                   <thead class="bg-gray-100">
                                       <tr>
                                           <th class="py-2 px-4 text-left">ID</th>
-                                          <th class="py-2 px-4 text-left">Email</th>
-                                          <th class="py-2 px-4 text-left">Full Name</th>
-                                          <th class="py-2 px-4 text-left">Phone</th>
-                                          <th class="py-2 px-4 text-left">Role</th>
+                                          <th class="py-2 px-4 text-left">Name</th>
+                                          <th class="py-2 px-4 text-left">Price</th>
+                                          <th class="py-2 px-4 text-left">Factory</th>
                                           <th class="py-2 px-4 text-left">Action</th>
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <c:forEach var="user" items="${users}">
+                                      <c:forEach var="product" items="${products}">
                                           <tr class="border-t">
-                                              <td class="py-2 px-4">${user.getId()}</td>
-                                              <td class="py-2 px-4">${user.getEmail()}</td>
-                                              <td class="py-2 px-4">${user.getName()}</td>
-                                              <td class="py-2 px-4">${user.getPhone()}</td>
-                                              <td class="py-2 px-4">${user.getRole()}</td>
+                                              <td class="py-2 px-4">${product.getId()}</td>
+                                              <td class="py-2 px-4">${product.getName()}</td>
+                                              <td class="py-2 px-4">
+                                                  <fmt:formatNumber value="${product.getPrice()}" />
+                                              </td>
+                                              <td class="py-2 px-4">${product.getFactory()}</td>
                                               <td class="py-2 px-4 space-x-2">
-                                                  <a href="/admin/user/${user.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
-                                                  <a href="/admin/user/update/${user.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Update</a>
-                                                  <a href="/admin/user/delete/${user.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
+                                                  <a href="/admin/product/${product.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
+                                                  <a href="/admin/product/update/${product.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Update</a>
+                                                  <a href="/admin/product/delete/${product.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
                                               </td>
                                           </tr>
                                       </c:forEach>
@@ -115,10 +114,10 @@
                           </div>
       
                           <!-- Pagination -->
-                          <!-- <nav class="flex justify-center mt-8">
+                          <nav class="flex justify-center mt-8">
                               <ul class="inline-flex items-center -space-x-px">
                                   <li>
-                                      <a href="/admin/user?page=${currentPage-1}" 
+                                      <a href="/admin/product?page=${currentPage-1}" 
                                           class="px-3 py-2 ml-0 leading-tight ${currentPage eq 1 ? 'pointer-events-none text-gray-400' : 'text-blue-500 hover:bg-gray-200'} border border-gray-300 rounded-l-lg">
                                           &laquo;
                                       </a>
@@ -138,8 +137,9 @@
                                       </a>
                                   </li>
                               </ul>
-                          </nav> -->
+                          </nav>
       
+                      </div>
                       </div>
                     </div>
                 </main>

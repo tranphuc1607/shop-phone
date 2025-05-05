@@ -23,7 +23,7 @@ public class ProductImage {
     public Integer getId() {return this.id;}
     public String getUrl() {return this.url;}
     public Boolean getIsPrimary() {return this.isPrimary;}
-    //public void setId(Integer id) {this.id = id;}
+    public void setId(Integer id) {this.id = id;}
     public void setUrl(String url) {this.url = url;}
     public void setIsPrimary(Boolean isPrimary) {this.isPrimary = isPrimary;}
     
@@ -33,5 +33,9 @@ public class ProductImage {
     	this.url = url;
     	this.isPrimary = isPrimary;
     	this.product = product;
+    }
+    public void setProduct(Product newProduct) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setProduct'");
     }
 }
