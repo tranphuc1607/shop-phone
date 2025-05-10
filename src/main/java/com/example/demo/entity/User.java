@@ -40,7 +40,7 @@ public class User {
     private String role;
     
     
-    @Column(name = "created_at", columnDefinition = "VARCHAR(20)") 
+    @Column(name = "created_at", columnDefinition = "VARCHAR(1000)") 
     private String createdAt;
 
     @OneToMany(mappedBy = "user") private List<Cart> carts;
@@ -105,6 +105,12 @@ public class User {
 	}
 	
 	public User() {}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", phone=" + phone
+				+ ", address=" + address + ", role=" + role + ", createdAt=" + createdAt + ", carts=" + carts
+				+ ", orders=" + orders + "]";
+	}
 	
 	
     

@@ -94,26 +94,30 @@
                                             <th class="py-2 px-4 text-left">ID</th>
                                             <th class="py-2 px-4 text-left">Name</th>
                                             <th class="py-2 px-4 text-left">Price</th>
-                                            <th class="py-2 px-4 text-left">Factory</th>
+                                            <th class="py-2 px-4 text-left">StockQuantity</th>
+                                            <th class="py-2 px-4 text-left">Brand</th>
                                             <th class="py-2 px-4 text-left">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="product" items="${products}">
-                                            <tr class="border-t">
-                                                <td class="py-2 px-4">${product.getId()}</td>
-                                                <td class="py-2 px-4">${product.getName()}</td>
-                                                <td class="py-2 px-4">
-                                                    <fmt:formatNumber value="${product.getPrice()}" />
-                                                </td>
-                                                <td class="py-2 px-4">${product.getFactory()}</td>
-                                                <td class="py-2 px-4 space-x-2">
-                                                    <a href="/admin/product/${product.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
-                                                    <a href="/admin/product/update/${product.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Update</a>
-                                                    <a href="/admin/product/delete/${product.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
+                                      <c:forEach var="product" items="${products}">
+                                        <tr class="border-t">
+                                            <td class="py-2 px-4">${product.id}</td>
+                                            <td class="py-2 px-4">
+                                              ${product.name}
+                                            </td>
+                                            <td class="py-2 px-4">${product.price}</td>
+                                            <td class="py-2 px-4">${product.stockQuantity}</td>
+                                            <td class="py-2 px-4">
+                                                <c:out value="${product.brand.name}" default="Unknown"/>
+                                            </td>
+                                            <td class="py-2 px-4 space-x-2">
+                                                <a href="/admin/product/${product.id}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
+                                                <a href="/admin/product/update/${product.id}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Update</a>
+                                                <a href="/admin/product/delete/${product.id}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

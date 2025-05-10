@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,8 @@ public class UserRepository {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    
     private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
     // Tìm tất cả người dùng
@@ -143,15 +146,15 @@ public class UserRepository {
 
         try {
             connection = ConnectionPoolImlp.getInstance().getConnection();
-            String sql = "INSERT INTO users (name, email, password, phone, address, role) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (name, email, password, phone, address,created_at, role) VALUES (?, ?, ?, ?, ?,?, ?)";
             ps = connection.prepareStatement(sql);
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getAddress());
-            ps.setString(6, user.getRole());
-
+            ps.setString(6, user.getCreatedAt());
+            ps.setString(7, user.getRole());
             ps.executeUpdate();
             connection.commit(); 
 
@@ -252,7 +255,7 @@ public class UserRepository {
     public void updateUser(User user) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-    
+        
         try {
             connection = ConnectionPoolImlp.getInstance().getConnection();
     
@@ -260,17 +263,17 @@ public class UserRepository {
             if (isEmailExist(user.getEmail(), user.getId(), connection)) {
                 throw new SQLException("Email already exists.");
             }
-    
-            String sql = "UPDATE users SET name = ?, address = ?, phone = ? WHERE id = ?";
+        
+            String sql = "UPDATE users SET name = ?, address = ?, phone = ?, password = ? WHERE id = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, user.getName());
             ps.setString(2, user.getAddress());
             ps.setString(3, user.getPhone());
-            ps.setInt(4, user.getId());
+            ps.setInt(5, user.getId());
     
             ps.executeUpdate();
             connection.commit(); // Nếu bạn dùng setAutoCommit(false)
-    
+        
         } catch (SQLException e) {
             if (connection != null) {
                 try {
@@ -285,17 +288,36 @@ public class UserRepository {
             if (connection != null) ConnectionPoolImlp.getInstance().releaseConnection(connection);
         }
     }
+
+    public void updatePassword(User user, String encodedPassword) throws SQLException {
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+    
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, encodedPassword); 
+            ps.setInt(2, user.getId()); 
+            ps.executeUpdate();
+        } finally {
+            if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+            if (connection != null) ConnectionPoolImlp.getInstance().releaseConnection(connection);
+        }
+    }
+    
     
 
     private User mapRowToUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
         user.setEmail(rs.getString("email"));
-        user.setName(rs.getString("name"));
-        user.setAddress(rs.getString("address"));
-        user.setPhone(rs.getString("phone"));
+        user.setPassword(rs.getString("password")); // ⚠ Kiểm tra dòng này
+        user.setRole(rs.getString("role"));
+        // ... các trường khác nếu có
         return user;
     }
+    
 
     public int getTotalUsers() {
         String sql = "SELECT COUNT(*) FROM users";
@@ -312,5 +334,7 @@ public class UserRepository {
 
         return jdbcTemplate.queryForObject(sql, Integer.class, startDate, endDate);
     }
+
+   
     
 }

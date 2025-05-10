@@ -9,7 +9,7 @@
 <body class="bg-gray-100">
 
 <div class="max-w-xl mx-auto mt-12 bg-white p-8 rounded-xl shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Cập nhật người dùng</h2>
+    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600"></h2>
 
     <form:form action="/admin/user/update" method="post" modelAttribute="currentUser" cssClass="space-y-5">
         <form:hidden path="id"/>
@@ -20,17 +20,17 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <form:input path="name" cssClass="w-full px-4 py-2 border rounded-md" />
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
             <form:input path="address" cssClass="w-full px-4 py-2 border rounded-md" />
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
             <form:input path="phone" cssClass="w-full px-4 py-2 border rounded-md" />
         </div>
 

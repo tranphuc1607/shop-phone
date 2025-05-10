@@ -38,14 +38,14 @@ public class SecurityConfig {
         http
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register","/homepage","/WEB-INF/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/login","/", "/register","/homepage","/WEB-INF/**", "/css/**", "/js/**", "/images/**","/admin/user/update/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form.disable())
             .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout=true")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()

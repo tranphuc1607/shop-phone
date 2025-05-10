@@ -1,6 +1,8 @@
 package com.example.demo.controller.admin;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.multipart.MultipartFile;
-// import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.User;
@@ -25,12 +27,12 @@ import jakarta.validation.Valid;
 public class UserController {
 
 	private final UserService userService;
-    // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     
     
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        // this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/admin/user")
@@ -59,8 +61,12 @@ public class UserController {
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
         } else {
-            // String hashedPassword = this.passwordEncoder.encode(newUser.getPassword());
-            // newUser.setPassword(hashedPassword);
+            String hashedPassword = this.passwordEncoder.encode(newUser.getPassword());
+            newUser.setPassword(hashedPassword);
+           LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedNow = now.format(formatter);
+            newUser.setCreatedAt(formattedNow);
             this.userService.saveUser(newUser);
         }
         return "redirect:/admin/user";
@@ -95,7 +101,8 @@ public class UserController {
                 redirectAttributes.addFlashAttribute("errorMessage", "Email already exists.");
                 return "redirect:/admin/user/update/" + currentUser.getId();
             }
-
+            String encodedPassword = this.passwordEncoder.encode(currentUser.getPassword());
+            currentUser.setPassword(encodedPassword);
             // Cập nhật thông tin người dùng
             userService.updateUser(currentUser);
             
@@ -114,7 +121,7 @@ public class UserController {
 
     @GetMapping("/admin/user/delete/{id}")
     public String getDeleteUserPage(RedirectAttributes redirectAttributes, @PathVariable int id) throws SQLException {
-        userService.deleteUser(id);
+        this.userService.deleteUser(id);
 	    redirectAttributes.addFlashAttribute("success", "Xóa thành công!");
 	    return "redirect:/admin/user";
     }

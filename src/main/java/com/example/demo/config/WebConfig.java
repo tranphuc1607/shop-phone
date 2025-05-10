@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.example.demo.service.validator.product.ProductValidator;
+
 //import com.example.demo.entity.User;
 
 @Configuration
@@ -26,6 +28,11 @@ public class WebConfig implements WebMvcConfigurer {
         bean.setPrefix("/WEB-INF/view/");
         bean.setSuffix(".jsp");
         return bean;
+    }
+
+     @Bean
+    public ProductValidator productValidator() {
+        return new ProductValidator();
     }
 
     @Override

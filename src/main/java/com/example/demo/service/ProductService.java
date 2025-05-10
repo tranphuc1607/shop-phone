@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Brand;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductImage;
 import com.example.demo.entity.ProductSpecification;
 import com.example.demo.repository.ProductRepository;
 
@@ -32,37 +31,12 @@ public class ProductService {
         return this.productRepository.getAllBrands();
     }
 
-    private String uploadImage(MultipartFile image) throws IOException {
-        // Đảm bảo rằng thư mục đã tồn tại
-        String uploadDir = "uploads/images/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-    
-        // Lưu tệp vào thư mục
-        String fileName = System.currentTimeMillis() + "-" + image.getOriginalFilename();
-        Path path = Paths.get(uploadDir + fileName);
-        Files.write(path, image.getBytes());
-    
-        return fileName; // Trả về tên tệp hoặc URL nếu bạn lưu tệp trên dịch vụ bên ngoài
+    public List<Product> getListProduct() throws SQLException {
+        return this.productRepository.getAllProducts();
     }
-    
 
-
-    public void createProduct(Product newProduct, MultipartFile[] images, int primaryIndex) throws IOException {
-        // Chuyển đổi MultipartFile[] thành ProductImage
-        List<ProductImage> productImages = new ArrayList<>();
-        for (int i = 0; i < images.length; i++) {
-            ProductImage productImage = new ProductImage();
-            productImage.setUrl(uploadImage(images[i])); // Giả sử bạn có phương thức uploadImage() để lưu ảnh.
-            productImage.setIsPrimary(i == primaryIndex);
-            productImages.add(productImage);
-        }
-    
-        newProduct.setImages(productImages);
-        // Lưu product vào cơ sở dữ liệu
-        this.productRepository.save(newProduct);
+    public void handleSaveProduct(Product product) throws SQLException {
+        this.productRepository.saveProduct(product);
     }
     
     

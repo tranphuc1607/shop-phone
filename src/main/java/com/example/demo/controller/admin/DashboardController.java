@@ -16,7 +16,16 @@ public class DashboardController {
         }
 
     @GetMapping("admin/dashboard")
-    public String getOrder(Model model) {
+    public String getDashboard(Model model) {
+        int totalCurrentUser = this.userService.getTotalUsers();
+        int totalUsersLastSunday =this.userService.getTotalUsersLastSunday();
+        model.addAttribute("totalCurrentUser",totalCurrentUser);
+        model.addAttribute("getTotalUsersLastSunday",((totalCurrentUser-totalUsersLastSunday)/totalCurrentUser)*(100));
+        return "admin/dashboard/showInterface";
+    }
+
+    @GetMapping("admin")
+    public String getDashBoardPage(Model model) {
         int totalCurrentUser = this.userService.getTotalUsers();
         int totalUsersLastSunday =this.userService.getTotalUsersLastSunday();
         model.addAttribute("totalCurrentUser",totalCurrentUser);

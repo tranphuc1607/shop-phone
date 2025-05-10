@@ -1,9 +1,13 @@
 package com.example.demo.controller.admin;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,21 +17,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductImage;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UploadFileService;
+import com.example.demo.service.validator.product.ProductValidator;
+
+import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 
 @Controller
 public class ProductController {
     private final ProductService productService;
+    private final UploadFileService uploadFileService;
+    private final ProductValidator productValidator;
 
-    public ProductController (ProductService productService) {
+    public ProductController (ProductService productService,UploadFileService uploadFileService,ProductValidator productValidator) {
         this.productService =productService;
+        this.uploadFileService = uploadFileService;
+        this.productValidator = productValidator;
     }
     @GetMapping("/admin/product")
-    public String getProduct() {
+    public String getProduct(Model model) throws SQLException {
+        List<Product> listProduct = this.productService.getListProduct();
+        model.addAttribute("products",listProduct);
         return "admin/product/showInterface";
     }
       @GetMapping("/admin/product/create")
@@ -37,26 +52,25 @@ public class ProductController {
         return "admin/product/create";
     }
     @PostMapping("/admin/product/create")
-public String createProduct(@ModelAttribute Product newProduct,
-                            @RequestParam("images") MultipartFile[] images,
-                            @RequestParam("primaryImageIndex") int primaryIndex) throws IOException {
+    public String createProduct(Model model, @ModelAttribute(name = "newProduct") @Valid Product newProduct,
+            BindingResult newProductBindingResult, @RequestParam("productFile") MultipartFile file) throws SQLException {
+                if (!file.isEmpty()) {
+                    newProduct.setImage("duma.png");
+                }
+                productValidator.validate(newProduct, newProductBindingResult);
+        if (newProductBindingResult.hasErrors()) {
+            model.addAttribute("listBrand",this.productService.getListBrand());
+            return "admin/product/create";
+        } else {
+            String productImg = this.uploadFileService.handleSaveUploadFile(file);
+            newProduct.setImage(productImg);
+             LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedNow = now.format(formatter);
+            newProduct.setCreatedAt(formattedNow);
+            this.productService.handleSaveProduct(newProduct);
+        }
 
-    // Chuyển đổi MultipartFile[] thành List<ProductImage>
-    List<ProductImage> productImages = new ArrayList<>();
-    for (int i = 0; i < images.length; i++) {
-        ProductImage productImage = new ProductImage();
-        productImage.setUrl(images[i].getOriginalFilename());  // Bạn có thể lưu URL hoặc lưu tệp sau khi upload.
-        productImage.setIsPrimary(i == primaryIndex);  // Đánh dấu ảnh chính.
-        productImages.add(productImage);
+        return "redirect:/admin/product";
     }
-
-    newProduct.setImages(productImages);  // Gán danh sách ảnh vào product.
-
-    // Gọi service để xử lý logic tạo sản phẩm
-    this.productService.createProduct(newProduct, images, primaryIndex);
-
-    // Sau khi tạo xong, chuyển hướng về trang danh sách sản phẩm
-    return "redirect:/admin/products";
-}
-    
-}
+    }

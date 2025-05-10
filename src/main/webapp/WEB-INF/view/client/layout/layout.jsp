@@ -20,7 +20,7 @@
                         </button>
                         
                         <div id="userDropdownMenu" class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden z-50">
-                            <a href="/account/update" class="block px-4 py-2 hover:bg-gray-100">Cập nhật tài khoản</a>
+                            <a href="/admin/user/update/${currentUser.id}"  class="block px-4 py-2 hover:bg-gray-100">Cập nhật tài khoản</a>
                             <a href="/account/change-password" class="block px-4 py-2 hover:bg-gray-100">Đổi mật khẩu</a>
                             <a href="/logout" class="block px-4 py-2 hover:bg-gray-100 text-red-500">Đăng xuất</a>
                         </div>

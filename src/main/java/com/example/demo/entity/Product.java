@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 //import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Product {
@@ -22,24 +25,34 @@ public class Product {
     @Column(columnDefinition = "VARCHAR(1000)")
     private String name;
     private String description;
-    private BigDecimal price;
-    private Integer stockQuantity;
+    private String price;
+    private String stockQuantity;
 
-    @Column(name = "created_at", columnDefinition = "VARCHAR(20)")
+    @Column(name = "created_at", columnDefinition = "VARCHAR(1000)")
     private String createdAt;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) private List<ProductImage> images;
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    private ProductSpecification specification;
+	private String image;
 
+
+	
+	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private ProductSpecification specification;
+	
     @OneToMany(mappedBy = "product") private List<CartItem> cartItems;
     @OneToMany(mappedBy = "product") private List<OrderItem> orderItems;
     
     
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -59,16 +72,16 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public BigDecimal getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(BigDecimal price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
-	public Integer getStockQuantity() {
+	public String getStockQuantity() {
 		return stockQuantity;
 	}
-	public void setStockQuantity(Integer stockQuantity) {
+	public void setStockQuantity(String stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
 	public String getCreatedAt() {
@@ -83,12 +96,7 @@ public class Product {
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
-	public List<ProductImage> getImages() {
-		return images;
-	}
-	public void setImages(List<ProductImage> images) {
-		this.images = images;
-	}
+	
 	public ProductSpecification getSpecification() {
 		return specification;
 	}
@@ -110,8 +118,8 @@ public class Product {
 	
 	//Constructor
 	
-	public Product(String name, String description, BigDecimal price, Integer stockQuantity, String createdAt,
-			Brand brand, List<ProductImage> images, ProductSpecification specification, List<CartItem> cartItems,
+	public Product(String name, String description, String price, String stockQuantity, String createdAt,
+			Brand brand,String image, ProductSpecification specification, List<CartItem> cartItems,
 			List<OrderItem> orderItems) {
 		super();
 		this.name = name;
@@ -120,7 +128,7 @@ public class Product {
 		this.stockQuantity = stockQuantity;
 		this.createdAt = createdAt;
 		this.brand = brand;
-		this.images = images;
+		this.image = image;
 		this.specification = specification;
 		this.cartItems = cartItems;
 		this.orderItems = orderItems;

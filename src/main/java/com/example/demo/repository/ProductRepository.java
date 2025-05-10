@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.config.ConnectionPoolImlp;
 import com.example.demo.entity.Brand;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductImage;
 import com.example.demo.entity.ProductSpecification;
 
 @Repository
@@ -64,14 +64,16 @@ public class ProductRepository {
         conn.setAutoCommit(false);
 
         // 1. Insert product
-        String sqlProduct = "INSERT INTO products (name, description, price, stock_quantity, created_at, brand_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlProduct = "INSERT INTO product (name, description, created_at, price, stock_quantity, image, brand_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         psProduct = conn.prepareStatement(sqlProduct, Statement.RETURN_GENERATED_KEYS);
+        
         psProduct.setString(1, product.getName());
         psProduct.setString(2, product.getDescription());
-        psProduct.setBigDecimal(3, product.getPrice());
-        psProduct.setInt(4, product.getStockQuantity());
-        psProduct.setString(5, product.getCreatedAt());
-        psProduct.setInt(6, product.getBrand().getId());
+        psProduct.setString(3, product.getCreatedAt());
+        psProduct.setString(4, product.getPrice());
+        psProduct.setString(5, product.getStockQuantity());
+        psProduct.setString(6, product.getImage());
+        psProduct.setInt(7, product.getBrand().getId());
 
         psProduct.executeUpdate();
 
@@ -98,20 +100,6 @@ public class ProductRepository {
             psSpec.executeUpdate();
         }
 
-        // 3. Insert product images
-        List<ProductImage> images = product.getImages();
-        if (images != null && !images.isEmpty()) {
-            String sqlImage = "INSERT INTO product_image (url, is_primary, product_id) VALUES (?, ?, ?)";
-            psImage = conn.prepareStatement(sqlImage);
-            for (ProductImage image : images) {
-                psImage.setString(1, image.getUrl());
-                psImage.setBoolean(2, image.getIsPrimary() != null && image.getIsPrimary());
-                psImage.setInt(3, productId);
-                psImage.addBatch();
-            }
-            psImage.executeBatch();
-        }
-
         conn.commit();
 
     } catch (SQLException e) {
@@ -129,5 +117,65 @@ public class ProductRepository {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
+
+    public List<Product> getAllProducts() throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+    
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection(); // Lấy kết nối từ pool
+    
+            String sql = "SELECT " +
+                         "p.id, p.name, p.description, p.price, p.stock_quantity, p.image, " +
+                         "b.id AS brand_id, b.name AS brand_name " +
+                         "FROM product p " +
+                         "JOIN brand b ON p.brand_id = b.id";
+    
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+    
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                String price = rs.getString("price");
+                String stockQuantity = rs.getString("stock_quantity");
+                String image = rs.getString("image");
+                int brandId = rs.getInt("brand_id");
+                String brandName = rs.getString("brand_name");
+    
+                // Tạo đối tượng Product
+                Product product = new Product();
+                product.setId(id);
+                product.setName(name);
+                product.setDescription(description);
+                product.setPrice(price);
+                product.setStockQuantity(stockQuantity);
+                product.setImage(image);
+    
+                // Tạo đối tượng Brand và gán vào Product
+                Brand brand = new Brand();
+                brand.setId(brandId);
+                brand.setName(brandName);
+                product.setBrand(brand);
+    
+                products.add(product);
+            }
+    
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching products", e);
+        } finally {
+            // Đóng tài nguyên
+            if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+            if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+            if (connection != null) ConnectionPoolImlp.getInstance().releaseConnection(connection);
+        }
+    
+        return products;
+    }
+    
+
 
 }
