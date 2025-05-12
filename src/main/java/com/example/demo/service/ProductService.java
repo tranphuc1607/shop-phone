@@ -35,6 +35,10 @@ public class ProductService {
         return this.productRepository.getAllProducts();
     }
 
+    public Product getProductById(int id) throws SQLException {
+        return this.productRepository.findProductById(id);
+    }
+
     public void handleSaveProduct(Product product) throws SQLException {
         this.productRepository.saveProduct(product);
     }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
 
-
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.config.ConnectionPoolImlp;
@@ -176,6 +175,74 @@ public class ProductRepository {
         return products;
     }
     
+    public Product findProductById(int productId) throws SQLException {
+    Connection connection = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    Product product = null;
+
+    try {
+        connection = ConnectionPoolImlp.getInstance().getConnection();
+
+        String sql = "SELECT " +
+                     "p.id, p.name, p.description, p.price, p.stock_quantity, p.image, p.created_at, " +
+                     "b.id AS brand_id, b.name AS brand_name, " +
+                     "s.id AS spec_id, s.ram, s.storage, s.screen, s.battery, s.os, s.chipset " +
+                     "FROM product p " +
+                     "JOIN brand b ON p.brand_id = b.id " +
+                     "LEFT JOIN product_specification s ON p.id = s.product_id " +
+                     "WHERE p.id = ?";
+
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, productId);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            // Brand
+            Brand brand = new Brand();
+            brand.setId(rs.getInt("brand_id"));
+            brand.setName(rs.getString("brand_name"));
+
+            // Product
+            product = new Product();
+            product.setId(rs.getInt("id"));
+            product.setName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setPrice(rs.getString("price"));
+            product.setStockQuantity(rs.getString("stock_quantity"));
+            product.setImage(rs.getString("image"));
+            product.setCreatedAt(rs.getString("created_at"));
+            product.setBrand(brand);
+
+            // Specification
+            int specId = rs.getInt("spec_id");
+            if (!rs.wasNull()) {
+                ProductSpecification spec = new ProductSpecification();
+                spec.setRam(rs.getString("ram"));
+                spec.setStorage(rs.getString("storage"));
+                spec.setScreen(rs.getString("screen"));
+                spec.setBattery(rs.getString("battery"));
+                spec.setOs(rs.getString("os"));
+                spec.setChipset(rs.getString("chipset"));
+                spec.setProduct(product); // liên kết ngược
+                product.setSpecification(spec);
+            }
+        }
+
+    } catch (SQLException e) {
+        throw new SQLException("Error finding product by id: " + productId, e);
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+        if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+        if (connection != null) ConnectionPoolImlp.getInstance().releaseConnection(connection);
+    }
+
+    return product;
+}
+
+
+
+
 
 
 }

@@ -11,13 +11,13 @@
                   <div class="py-1">
                     <ul>
                       <li>
-                         <a href="/admin/user/${currentUser.id}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                         <a href="/admin/user/${currentUser.id}" class="block px-4 py-2 hover:bg-gray-100">Tài khoản</a>
                       </li>
                       <li>
-                        <a href="/admin/user/update/${currentUser.id}" class="block px-4 py-2 hover:bg-gray-100">Update Profile</a>
+                        <a href="/admin/user/update/${currentUser.id}" class="block px-4 py-2 hover:bg-gray-100">Cập nhật tài khoản</a>
                       </li>
                       <li>
-                        <a href="/logout" class="block px-4 py-2 hover:bg-gray-100 text-red-500">Logout</a>
+                        <a href="/logout" class="block px-4 py-2 hover:bg-gray-100 text-red-500">Đăng xuất</a>
                       </li>
                     </ul>
                   </div>

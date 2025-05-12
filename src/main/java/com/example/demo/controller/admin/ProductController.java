@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,4 +74,21 @@ public class ProductController {
 
         return "redirect:/admin/product";
     }
+
+    @GetMapping("/admin/product/{id}")
+    public String getDetailProduct(Model model, @PathVariable("id") int id) throws SQLException {
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("id", id);
+        return "admin/product/detail";
+
+    }
+
+    @GetMapping("/admin/product/update/{id}")
+    public String getUpdateProduct(Model model, @PathVariable("id") int id) throws SQLException {
+        model.addAttribute("updateProduct", new Product());
+        model.addAttribute("listBrand", this.productService.getListBrand());
+        return "admin/product/update";
+    }
+    
     }

@@ -38,17 +38,35 @@ public class ProductValidator implements Validator {
         }
 
         // Kiểm tra giá sản phẩm (Price) không trống và phải lớn hơn 0
-        if (product.getPrice() == null) {
+        String priceStr = product.getPrice();
+
+        if (priceStr == null || priceStr.trim().isEmpty()) {
             errors.rejectValue("price", "product.price.empty", "Vui lòng điền giá sản phẩm.");
-        } else if (Double.parseDouble(product.getPrice()) <= 0) {
-            errors.rejectValue("price", "product.price.invalid", "Giá sản phẩm phải lớn hơn 0.");
+        } else {
+            try {
+                double price = Double.parseDouble(priceStr);
+                if (price <= 0) {
+                    errors.rejectValue("price", "product.price.invalid", "Giá sản phẩm phải lớn hơn 0.");
+                }
+            } catch (NumberFormatException e) {
+                errors.rejectValue("price", "product.price.invalidFormat", "Giá sản phẩm không hợp lệ.");
+            }
         }
 
         // Kiểm tra số lượng sản phẩm (Stock Quantity) không trống và không được âm
-        if (product.getStockQuantity() == null) {
+      String stockStr = product.getStockQuantity();
+
+        if (stockStr == null || stockStr.trim().isEmpty()) {
             errors.rejectValue("stockQuantity", "product.stockQuantity.empty", "Vui lòng điền số lượng sản phẩm.");
-        } else if (Double.parseDouble(product.getStockQuantity()) <= 0) {
-            errors.rejectValue("stockQuantity", "product.stockQuantity.invalid", "Số lượng sản phẩm không thể là số âm.");
+        } else {
+            try {
+                double quantity = Double.parseDouble(stockStr);
+                if (quantity <= 0) {
+                    errors.rejectValue("stockQuantity", "product.stockQuantity.invalid", "Số lượng sản phẩm phải lớn hơn 0.");
+                }
+            } catch (NumberFormatException e) {
+                errors.rejectValue("stockQuantity", "product.stockQuantity.notnumber", "Số lượng phải là số hợp lệ.");
+            }
         }
 
         // Kiểm tra có thương hiệu (Brand) không

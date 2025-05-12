@@ -34,10 +34,10 @@
                     display :none;
                   }
 
-                  header {
+                  /* header {
                     width: 100%;
                     left: 0;
-                  }
+                  } */
 
                   #content {
                     margin-left: 0;

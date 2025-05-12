@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.User;
+import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,17 +27,21 @@ import jakarta.validation.Valid;
 @Controller
 public class HomepageController {
     private final UserService userService;
+    private final ProductService productService;
 
-    public HomepageController(UserService userService ){
+    public HomepageController(UserService userService,ProductService productService ){
         this.userService = userService;
+        this.productService = productService;
     }
 
     @GetMapping("/homepage")
-    public String getHomePage() {
+    public String getHomePage(Model model) throws SQLException {
+        model.addAttribute("products",this.productService.getListProduct());
         return "client/home/interface";
     }
     @GetMapping("/")
-    public String getHome() {
+    public String getHome(Model model) throws SQLException {
+        model.addAttribute("products",this.productService.getListProduct());
         return "client/home/interface";
     }
 
