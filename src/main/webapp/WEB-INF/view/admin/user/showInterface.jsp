@@ -71,18 +71,18 @@
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
                 <main>
                     <div class="container mx-auto p-4">
-                        <h1 class="text-3xl font-bold text-orange-500 mb-4">MANAGE USERS</h1>
+                        <h1 class="text-3xl font-bold text-orange-500 mb-4">Quản lí người dùng</h1>
                         <nav class="text-sm mb-6">
                           <ol class="list-reset flex text-gray-700">
-                            <li><a href="/admin/dashboard" class="hover:underline text-blue-500">Dashboard</a></li>
+                            <li><a href="/admin/dashboard" class="hover:underline text-blue-500">Tổng quan</a></li>
                             <li><span class="mx-2">/</span></li>
-                            <li>User</li>
+                            <li>Người dùng</li>
                           </ol>
                         </nav>
                         <div class="mt-8">
                           <div class="flex flex-col md:flex-row md:justify-between items-center mb-4">
-                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Table Users</h3>
-                              <a href="/admin/user/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create new Users</a>
+                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Bảng người dùng</h3>
+                              <a href="/admin/user/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tạo mới người dùng</a>
                           </div>
                           <hr class="mb-4 border-gray-300">
       
@@ -92,10 +92,10 @@
                                       <tr>
                                           <th class="py-2 px-4 text-left">ID</th>
                                           <th class="py-2 px-4 text-left">Email</th>
-                                          <th class="py-2 px-4 text-left">Full Name</th>
-                                          <th class="py-2 px-4 text-left">Phone</th>
-                                          <th class="py-2 px-4 text-left">Role</th>
-                                          <th class="py-2 px-4 text-left">Action</th>
+                                          <th class="py-2 px-4 text-left">Tên đầy đủ</th>
+                                          <th class="py-2 px-4 text-left">Số điện thoại</th>
+                                          <th class="py-2 px-4 text-left">Vai trò</th>
+                                          <th class="py-2 px-4 text-left">Hoạt động</th>
                                       </tr>
                                   </thead>
                                   <tbody>

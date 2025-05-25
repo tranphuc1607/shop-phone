@@ -68,17 +68,17 @@
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
                 <main>
                     <div class="container mx-auto p-4">
-                        <h1 class="text-3xl font-bold text-orange-500 mb-4">MANAGE ORDERS</h1>
+                        <h1 class="text-3xl font-bold text-orange-500 mb-4">Quản lí đơn hàng</h1>
                         <nav class ="text-sm mb-6">
                           <ol class="list-reset flex text-gray-700">
-                            <li><a href="/admin/dashboard" class="text-blue-500 hover:underline">Dashboard</a></li>
+                            <li><a href="/admin/dashboard" class="text-blue-500 hover:underline">Thống kê</a></li>
                             <li><span class="mx-2">/</span></li>
-                            <li class="text-gray-500">Order</li>
+                            <li class="text-gray-500">Đơn hàng</li>
                           </ol>
                         </nav>
                         <div class="mt-8">
                           <div class="mb-4">
-                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Table All Orders</h3>
+                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Tất cả đơn hàng</h3>
                           </div>
                           <hr class="mb-4 border-gray-300">
       
@@ -87,10 +87,10 @@
                                   <thead class="bg-gray-100">
                                       <tr>
                                           <th class="py-2 px-4 text-left">ID</th>
-                                          <th class="py-2 px-4 text-left">Name</th>
-                                          <th class="py-2 px-4 text-left">Price</th>
-                                          <th class="py-2 px-4 text-left">Factory</th>
-                                          <th class="py-2 px-4 text-left">Action</th>
+                                          <th class="py-2 px-4 text-left">Tên</th>
+                                          <th class="py-2 px-4 text-left">Giá</th>
+                                          <th class="py-2 px-4 text-left">Hãng</th>
+                                          <th class="py-2 px-4 text-left">Trạng thái</th>
                                       </tr>
                                   </thead>
                                   <tbody>

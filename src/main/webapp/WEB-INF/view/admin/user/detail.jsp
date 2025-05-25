@@ -24,23 +24,23 @@
             <div class="row">
                 <div class="col-12 mx-auto">
                     <div class="d-flex justify-content-between">
-                        <h3>User detail with id= ${id}</h3>
+                        <h3> Người dùng ${id}</h3>
                     </div>
                     <hr>
                     <div class="card" style="width: 60%;">
                         <div class="card-header">
-                            User information
+                            Thông tin người dùng
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Id: ${id}</li>
-                            <li class="list-group-item">Full name: ${user.name} </li>
-                            <li class="list-group-item">Address: ${user.address} </li>
-                            <li class="list-group-item">Phone: ${user.phone} </li>
+                            <li class="list-group-item">Tên đầy dủ: ${user.name} </li>
+                            <li class="list-group-item">Địa chỉ: ${user.address} </li>
+                            <li class="list-group-item">Số điện thoại: ${user.phone} </li>
                             <li class="list-group-item">Email: ${user.email} </li>
                             </li>
                         </ul>
                     </div>
-                    <a href="/admin/user" class="btn btn-secondary mt-2">Back</a>
+                    <a href="/admin/user" class="btn btn-secondary mt-2">Trở lại</a>
                 </div>
             </div>
         </div>

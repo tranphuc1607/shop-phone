@@ -15,7 +15,7 @@
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold mb-6 text-center">Create a User</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">Tạo mới người dùng</h1>
         <hr class="mb-6">
 
         <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
@@ -25,7 +25,7 @@
                 <c:set var="errorEmail">
                     <form:errors path="email" />
                 </c:set>
-                <label for="email" class="text-sm font-medium mb-1">Email address</label>
+                <label for="email" class="text-sm font-medium mb-1">Email</label>
                 <form:input type="email" id="email"
                     class="border rounded-md p-2 ${not empty errorEmail ? 'border-red-500' : 'border-gray-300'}" 
                     path="email" />
@@ -36,7 +36,7 @@
                 <c:set var="errorPassword">
                     <form:errors path="password" />
                 </c:set>
-                <label for="password" class="text-sm font-medium mb-1">Password</label>
+                <label for="password" class="text-sm font-medium mb-1">Mật khẩu</label>
                 <form:input type="password" id="password"
                     class="border rounded-md p-2 ${not empty errorPassword ? 'border-red-500' : 'border-gray-300'}"
                     path="password" />
@@ -47,7 +47,7 @@
                 <c:set var="errorName">
                     <form:errors path="name" />
                 </c:set>
-                <label for="name" class="text-sm font-medium mb-1">Name</label>
+                <label for="name" class="text-sm font-medium mb-1">Tên đầy đủ</label>
                 <form:input type="text" id="name"
                     class="border rounded-md p-2 ${not empty errorName ? 'border-red-500' : 'border-gray-300'}"
                     path="name" />
@@ -58,29 +58,33 @@
                 <c:set var="errorPhone">
                     <form:errors path="phone" />
                 </c:set>
-                <label for="phone" class="text-sm font-medium mb-1">Phone</label>
+                <label for="phone" class="text-sm font-medium mb-1">Số điện thoại</label>
                 <form:input type="text" id="phone" class="border border-gray-300 rounded-md p-2" path="phone" />
                 <form:errors path="phone" cssClass="text-red-500 text-xs mt-1" />
             </div>
 
             <div class="flex flex-col md:col-span-2">
-                <label for="address" class="text-sm font-medium mb-1">Address</label>
+                <label for="address" class="text-sm font-medium mb-1">Địa chỉ</label>
                 <form:input type="text" id="address" class="border border-gray-300 rounded-md p-2" path="address" />
             </div>
 
             <div class="flex flex-col">
-                <label for="role" class="text-sm font-medium mb-1">Role</label>
+                <label for="role" class="text-sm font-medium mb-1">Vai trò</label>
                 <form:select id="role" path="role" class="border border-gray-300 rounded-md p-2">
-                    <form:option value="ADMIN">Admin</form:option>
-                    <form:option value="USER">User</form:option>
+                    <form:option value="ADMIN">Quản lí</form:option>
+                    <form:option value="USER">Người dùng</form:option>
                 </form:select>
             </div>
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-2 flex justify-between">
                 <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
-                    Create
+                    class="w-[40%] bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+                    Tạo người dùng
                 </button>
+                <a href = "/admin/user" class="w-[30%] bg-gray-500 text-white text-center leading-[-20px] ">
+                    
+                    Quay lại
+                </a>
             </div>
         </form:form>
     </div>

@@ -241,6 +241,79 @@ public class ProductRepository {
 }
 
 
+public void updateProduct(Product product) throws SQLException {
+    Connection conn = null;
+    PreparedStatement psUpdateProduct = null;
+    PreparedStatement psUpdateSpec = null;
+
+    try {
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        conn.setAutoCommit(false);
+
+        // 1. Update product table
+        String sqlUpdateProduct = "UPDATE product SET name=?, description=?, price=?, stock_quantity=?, image=?, brand_id=? WHERE id=?";
+        psUpdateProduct = conn.prepareStatement(sqlUpdateProduct);
+
+        psUpdateProduct.setString(1, product.getName());
+        psUpdateProduct.setString(2, product.getDescription());
+        psUpdateProduct.setString(3, product.getPrice());
+        psUpdateProduct.setString(4, product.getStockQuantity());
+        psUpdateProduct.setString(5, product.getImage());
+        psUpdateProduct.setInt(6, product.getBrand().getId());
+        psUpdateProduct.setInt(7, product.getId());
+
+        int updatedRows = psUpdateProduct.executeUpdate();
+
+        if (updatedRows == 0) {
+            throw new SQLException("Không tìm thấy sản phẩm để cập nhật với ID = " + product.getId());
+        }
+
+        // 2. Update specification table
+        String sqlUpdateSpec = "UPDATE product_specification SET ram=?, storage=?, screen=?, battery=?, os=?, chipset=? WHERE product_id=?";
+        psUpdateSpec = conn.prepareStatement(sqlUpdateSpec);
+
+        psUpdateSpec.setString(1, product.getSpecification().getRam());
+        psUpdateSpec.setString(2, product.getSpecification().getStorage());
+        psUpdateSpec.setString(3, product.getSpecification().getScreen());
+        psUpdateSpec.setString(4, product.getSpecification().getBattery());
+        psUpdateSpec.setString(5, product.getSpecification().getOs());
+        psUpdateSpec.setString(6, product.getSpecification().getChipset());
+        psUpdateSpec.setInt(7, product.getId());
+
+        int updatedSpecRows = psUpdateSpec.executeUpdate();
+
+        if (updatedSpecRows == 0) {
+            // Nếu không có bản ghi specs hiện tại, có thể insert mới (tùy nghiệp vụ)
+            String sqlInsertSpec = "INSERT INTO specification (product_id, ram, storage, screen, battery, os, chipset) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement psInsertSpec = conn.prepareStatement(sqlInsertSpec)) {
+                psInsertSpec.setInt(1, product.getId());
+                psInsertSpec.setString(2, product.getSpecification().getRam());
+                psInsertSpec.setString(3, product.getSpecification().getStorage());
+                psInsertSpec.setString(4, product.getSpecification().getScreen());
+                psInsertSpec.setString(5, product.getSpecification().getBattery());
+                psInsertSpec.setString(6, product.getSpecification().getOs());
+                psInsertSpec.setString(7, product.getSpecification().getChipset());
+                psInsertSpec.executeUpdate();
+            }
+        }
+
+        conn.commit();
+
+    } catch (SQLException e) {
+        if (conn != null) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        throw e;
+    } finally {
+        if (psUpdateProduct != null) psUpdateProduct.close();
+        if (psUpdateSpec != null) psUpdateSpec.close();
+        if (conn != null) conn.close();
+    }
+}
 
 
 

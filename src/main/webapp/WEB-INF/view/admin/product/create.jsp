@@ -67,7 +67,7 @@
         <jsp:include page="../layout/header.jsp" />
         <jsp:include page="../layout/navbar.jsp" />
         <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
-            <h2 class="text-2xl font-semibold text-center mb-6">Create New Product</h2>
+            <h2 class="text-2xl font-semibold text-center mb-6">Tạo mới sản phẩm</h2>
 
             <c:if test="${not empty errorMessage}">
                 <div class="bg-red-500 text-white p-4 rounded mb-6">
@@ -78,31 +78,31 @@
             <form:form method="POST" modelAttribute="newProduct" action="/admin/product/create" enctype="multipart/form-data">
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label for="name" class="block font-semibold">Product Name</label>
+                        <label for="name" class="block font-semibold">Tên sản phẩm</label>
                         <form:input path="name" id="name" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="name" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="description" class="block font-semibold">Description</label>
+                        <label for="description" class="block font-semibold">Mô tả </label>
                         <form:input path="description" id="description" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="description" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="price" class="block font-semibold">Price</label>
+                        <label for="price" class="block font-semibold">Giá</label>
                         <form:input path="price" id="price" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="price" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="stockQuantity" class="block font-semibold">Stock Quantity</label>
+                        <label for="stockQuantity" class="block font-semibold">Số lượng kho</label>
                         <form:input path="stockQuantity" id="stockQuantity" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="stockQuantity" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="brand" class="block font-semibold">Brand</label>
+                        <label for="brand" class="block font-semibold">Hãng</label>
                         <form:select path="brand.id" id="brand" class="w-full p-2 border rounded ">
                             <c:forEach var="brandItem" items="${listBrand}">
                                 <option  value="${brandItem.id}">${brandItem.name}</option>
@@ -115,7 +115,7 @@
 
                 <!-- Thông số kỹ thuật -->
                 <div class="grid grid-cols-1 bg-blue-200">
-                    <div class="w-full p-2 border rounded text-center font-bold">Specifications</div>
+                    <div class="w-full p-2 border rounded text-center font-bold">Đặc điểm sản phẩm</div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mb-6">
@@ -126,25 +126,25 @@
                         <form:errors path="specification.ram" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="storage" class="block font-semibold">Storage</label>
+                        <label for="storage" class="block font-semibold">Bộ nhớ</label>
                         <form:input path="specification.storage" id="storage" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="specification.storage" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="screen" class="block font-semibold">Screen</label>
+                        <label for="screen" class="block font-semibold">Màn hình</label>
                         <form:input path="specification.screen" id="screen" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="specification.screen" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="battery" class="block font-semibold">Battery</label>
+                        <label for="battery" class="block font-semibold">Pin</label>
                         <form:input path="specification.battery" id="battery" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="specification.battery" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="os" class="block font-semibold">Operating System</label>
+                        <label for="os" class="block font-semibold">Hệ điều hành</label>
                         <form:input path="specification.os" id="os" class="w-full p-2 border rounded" />
                         <!-- Hiển thị lỗi cho trường này -->
                         <form:errors path="specification.os" class="text-red-500 text-sm" />
@@ -175,9 +175,9 @@
 
                 <div class="flex justify-center">
                     <button type="submit" class="w-1/3 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 mr-[30px]" >
-                        Create Product
+                        Tạo sản phẩm
                     </button> 
-                        <a class="w-1/3 py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 text-center" href = "/admin/product"> Back</a>
+                        <a class="w-1/3 py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 text-center" href = "/admin/product">Trở lại</a>
                 </div>
             </form:form>
             
@@ -207,6 +207,120 @@
         }
     }
 </script>
+<script>
+            const dropdownButton = document.getElementById('dropdown');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+
+            let timer;
+            dropdownButton.addEventListener('click', function() {
+                if (dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.remove('hidden');
+                timer = setTimeout(() => {
+                    dropdownMenu.classList.add('opacity-0');
+                }, 10000);
+                } else {
+                dropdownMenu.classList.add('hidden');
+                dropdownMenu.classList.remove('opacity-0');
+                clearTimeout(timer);
+                }
+            });
+
+            window.addEventListener('click', function(event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+                dropdownMenu.classList.remove('opacity-0');
+                
+                clearTimeout(timer);
+                }
+            });
+
+            const dropdownShowOrder = document.getElementById('dropdownShowOrder');
+            const dropdownOrder = document.getElementById('dropdownOrder');
+
+            let timer2;
+            dropdownShowOrder.addEventListener('click', function() {
+                if (dropdownOrder.classList.contains('hidden')) {
+                dropdownOrder.classList.remove('hidden');
+                timer2 = setTimeout(() => {
+                    dropdownOrder.classList.add('opacity-0');
+                }, 10000);
+                } else {
+                dropdownOrder.classList.add('hidden');
+                dropdownOrder.classList.remove('opacity-0');
+                clearTimeout(timer2);
+                }
+            });
+
+            window.addEventListener('click', function(event) {
+                if (!dropdownShowOrder.contains(event.target) && !dropdownOrder.contains(event.target)) {
+                dropdownOrder.classList.add('hidden');
+                dropdownOrder.classList.remove('opacity-0');
+                
+                clearTimeout(timer2);
+                }
+            });
+
+            const toggleBtn = document.getElementById('icon--list');
+            const nav = document.querySelector('nav');
+            const header = document.getElementById('header');
+            const content = document.getElementById('content');
+
+            function isLargeScreen() {
+              return window.innerWidth >= 1024;
+            }
+
+            let isHidden = localStorage.getItem('navHidden') === 'true';
+
+            function updateLayout() {
+              if (isLargeScreen()) {
+                if (isHidden) {
+                  nav.classList.add('hidden');
+                  nav.classList.remove('show');
+                  header.style.width = '100%';
+                  header.style.left = '0';
+                  content.style.marginLeft = '0';
+                } else {
+                  nav.classList.remove('hidden');
+                  nav.classList.remove('show');
+                  header.style.width = 'calc(100% - 260px)';
+                  header.style.left = '260px';
+                  content.style.marginLeft = '260px';
+                }
+              } else {
+                header.style.width = '100%';
+                header.style.left = '0';
+                content.style.marginLeft = '0';
+                nav.classList.add('hidden');
+                nav.classList.remove('show');
+              }
+            }
+
+            toggleBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (isLargeScreen()) {
+                isHidden = !isHidden;
+                localStorage.setItem('navHidden', isHidden);
+                updateLayout();
+              } else {
+                nav.classList.remove('hidden');
+                nav.classList.add('show');
+              }
+            });
+
+            document.addEventListener('click', () => {
+              if (!isLargeScreen()) {
+                nav.classList.remove('show');
+                nav.classList.add('hidden');
+              }
+            });
+
+            nav.addEventListener('click', (e) => {
+              e.stopPropagation();
+            });
+
+            updateLayout();
+            window.addEventListener('resize', updateLayout);
+        </script>
 
 </body>
 </html>

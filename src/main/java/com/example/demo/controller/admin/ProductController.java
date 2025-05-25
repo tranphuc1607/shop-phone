@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +24,6 @@ import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
 
 @Controller
@@ -86,9 +83,39 @@ public class ProductController {
 
     @GetMapping("/admin/product/update/{id}")
     public String getUpdateProduct(Model model, @PathVariable("id") int id) throws SQLException {
-        model.addAttribute("updateProduct", new Product());
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("updateProduct", product);
         model.addAttribute("listBrand", this.productService.getListBrand());
         return "admin/product/update";
     }
-    
+
+   @PostMapping("/admin/product/update/{id}")
+public String updateProduct(
+        @PathVariable("id") int id,
+        @ModelAttribute("updateProduct") @Valid Product updateProduct,
+        BindingResult updateProductBindingResult,
+        @RequestParam("productFile") MultipartFile file,
+        Model model
+) throws SQLException {
+
+    if (!file.isEmpty()) {
+        String imageName = uploadFileService.handleSaveUploadFile(file);
+        updateProduct.setImage(imageName);
     }
+
+    productValidator.validate(updateProduct, updateProductBindingResult);
+
+    if (updateProductBindingResult.hasErrors()) {
+        // Gán lại ID nếu cần
+        updateProduct.setId(id);
+        model.addAttribute("listBrand", this.productService.getListBrand());
+        return "admin/product/update"; // Không redirect!
+    }
+
+    updateProduct.setId(id); // Gán ID vào product nếu bị mất
+    productService.handleUpdateProduct(updateProduct);
+
+    return "redirect:/admin/product";
+}
+
+}
