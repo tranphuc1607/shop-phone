@@ -51,21 +51,40 @@
                 <!-- Quantity selector -->
                 <div class="flex items-center space-x-2 mb-4">
                     <button type="button" onclick="updateQuantity(-1)" class="w-8 h-8 border rounded-full">-</button>
-                    <input type="text" id="quantityDisplay" value="1" class="w-12 text-center border rounded bg-gray-100" readonly>
+                    <c:if test="${not empty quantityBeforeUpdate}">
+                        <input type="text" id="quantityDisplay" value=${quantityBeforeUpdate} class="w-12 text-center border rounded bg-gray-100" readonly>
+                    </c:if>
+                     <c:if test="${empty quantityBeforeUpdate}">
+                        <input type="text" id="quantityDisplay" value="1" class="w-12 text-center border rounded bg-gray-100" readonly>
+                    </c:if>
                     <button type="button" onclick="updateQuantity(1)" class="w-8 h-8 border rounded-full">+</button>
                 </div>
+                <c:if test="${empty quantityBeforeUpdate}">
+                    <!-- Add to Cart Form -->
+                    <form method="post" action="/cart/add/${product.id}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="productId" value="${product.id}" />
+                        <input type="hidden" name="quantity" id="quantityInput" value="1" />
 
-                <!-- Add to Cart Form -->
-                <form method="post" action="/cart/add/${product.id}">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    <input type="hidden" name="productId" value="${product.id}" />
-                    <input type="hidden" name="quantity" id="quantityInput" value="1" />
+                        <button type="submit"
+                            class="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+                </c:if>
 
-                    <button type="submit"
-                        class="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        <i class="fa fa-shopping-cart"></i> Add to Cart
-                    </button>
-                </form>
+                <c:if test="${not empty quantityBeforeUpdate}">
+                    <!-- Add to Cart Form -->
+                    <form method="post" action="/cart/updateItemCart/${cartItemId}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="quantity" id="quantityInput" value=${quantityBeforeUpdate} />
+
+                        <button type="submit"
+                            class="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            <i class="fa fa-shopping-cart"></i> Cập nhật giỏ hàng
+                        </button>
+                    </form>
+                </c:if>
             </div>
         </div>
 

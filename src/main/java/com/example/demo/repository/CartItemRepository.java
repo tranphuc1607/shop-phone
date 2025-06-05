@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.config.ConnectionPoolImlp;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.DTO.CartItemViewDTO;
 
 @Repository
@@ -102,5 +103,59 @@ public class CartItemRepository {
                 connection.close();
             }
         }
+
+    }
+    public void updateCartItem(int cartItemId, int quantity) throws SQLException {
+        String sql = "UPDATE cart_item SET quantity = ? WHERE id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, quantity);
+            ps.setInt(2, cartItemId);
+            ps.executeUpdate();
+            connection.commit(); // Commit the transaction
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error updating cart item with ID: " + cartItemId, e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public int getProductIdByCartItemId(int cartItemId) throws SQLException {
+        String sql = "SELECT ci.product_id FROM cart_item ci WHERE ci.id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, cartItemId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("product_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error retrieving product for cart item ID: " + cartItemId, e);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return -1; // Return null if no product found
     }
 }

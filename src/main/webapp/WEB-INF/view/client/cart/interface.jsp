@@ -45,9 +45,15 @@
                             </td>
                             <td class="py-2 px-4 space-x-2 flex items-center justify-between w-[100px]">
                                 <!-- Xem chi tiết / chỉnh sửa số lượng -->
-                                <a href="/cart/delete/${cartItem.cartItemId}" class="text-white px-3 py-1 rounded">
-                                    <svg class="w-[20px] h-[20px] hover:fill-yellow-800 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M352 320c88.4 0 160-71.6 160-160c0-15.3-2.2-30.1-6.2-44.2c-3.1-10.8-16.4-13.2-24.3-5.3l-76.8 76.8c-3 3-7.1 4.7-11.3 4.7L336 192c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l76.8-76.8c7.9-7.9 5.4-21.2-5.3-24.3C382.1 2.2 367.3 0 352 0C263.6 0 192 71.6 192 160c0 19.1 3.4 37.5 9.5 54.5L19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L297.5 310.5c17 6.2 35.4 9.5 54.5 9.5zM80 408a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
-                                </a>
+                                  <form action="/cart/cartItem/detail/${cartItem.cartItemId}" method="post" style="display:inline;">
+                                    <input type="hidden" name="quantity" id="quantityInput" value=${cartItem.quantity} />
+                                    <button type="submit" class="text-white px-3 py-1 rounded" style="background: none; border: none;">
+                                        <svg class="w-[20px] h-[20px] hover:fill-yellow-800 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M352 320c88.4 0 160-71.6 160-160c0-15.3-2.2-30.1-6.2-44.2c-3.1-10.8-16.4-13.2-24.3-5.3l-76.8 76.8c-3 3-7.1 4.7-11.3 4.7L336 192c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l76.8-76.8c7.9-7.9 5.4-21.2-5.3-24.3C382.1 2.2 367.3 0 352 0C263.6 0 192 71.6 192 160c0 19.1 3.4 37.5 9.5 54.5L19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L297.5 310.5c17 6.2 35.4 9.5 54.5 9.5zM80 408a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+                                        </svg>
+
+                                    </button>
+                                </form>
                                  <!-- Xóa sản phẩm khỏi giỏ hàng -->
                                   <form action="/cart/delete/${cartItem.cartItemId}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="display:inline;">
                                     <button type="submit" class="text-white px-3 py-1 rounded" style="background: none; border: none;">
@@ -60,9 +66,14 @@
                             </td>
                         </tr>
                     </c:forEach>
+                   
                 </tbody>
             </table>
-
+             <c:if test = "${not empty error}">
+                      <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+                        <strong>Lỗi:</strong> ${error}
+                        </div>
+                    </c:if>
         </c:if>
         <!-- Action buttons -->
             <div class="flex justify-end gap-4 mt-6">
