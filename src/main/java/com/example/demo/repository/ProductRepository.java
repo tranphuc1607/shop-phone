@@ -216,17 +216,17 @@ public class ProductRepository {
 
             // Specification
             //int specId = rs.getInt("spec_id");
-            if (!rs.wasNull()) {
-                ProductSpecification spec = new ProductSpecification();
-                spec.setRam(rs.getString("ram"));
-                spec.setStorage(rs.getString("storage"));
-                spec.setScreen(rs.getString("screen"));
-                spec.setBattery(rs.getString("battery"));
-                spec.setOs(rs.getString("os"));
-                spec.setChipset(rs.getString("chipset"));
-                spec.setProduct(product); // liên kết ngược
-                product.setSpecification(spec);
-            }
+
+            ProductSpecification spec = new ProductSpecification();
+            spec.setRam(rs.getString("ram"));
+            spec.setStorage(rs.getString("storage"));
+            spec.setScreen(rs.getString("screen"));
+            spec.setBattery(rs.getString("battery"));
+            spec.setOs(rs.getString("os"));
+            spec.setChipset(rs.getString("chipset"));
+            spec.setProduct(product); // liên kết ngược
+            product.setSpecification(spec);
+            
         }
 
     } catch (SQLException e) {

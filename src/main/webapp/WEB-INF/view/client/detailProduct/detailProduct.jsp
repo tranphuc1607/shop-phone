@@ -46,7 +46,7 @@
             </div>
             <div class="md:w-1/2">
               <h4 class="text-2xl font-bold mb-2">${product.name}</h4>
-              <p class="mb-2">Factory: ${product.factory}</p>
+              
               <h5 class="text-xl font-bold text-red-600 mb-3">
                 <fmt:formatNumber type="number" value="${product.price}" /> VND
               </h5>

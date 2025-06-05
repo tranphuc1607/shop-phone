@@ -36,7 +36,7 @@
                             <p class="text-lg text-red-500 font-bold mb-3">
                                 <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
                             </p>
-                            <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
+                            <form class="flex" method="post" action="/product/addToCart/${product.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <button type="submit"
                                         class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
@@ -61,7 +61,7 @@
                             <p class="text-lg text-red-500 font-bold mb-3">
                                 <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
                             </p>
-                            <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
+                            <form class="flex" method="post" action="product/detail/${product.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <button type="submit"
                                         class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
@@ -86,7 +86,7 @@
                             <p class="text-lg text-red-500 font-bold mb-3">
                                 <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
                             </p>
-                            <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
+                            <form class="flex" method="post" action="product/detail/${product.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <button type="submit"
                                         class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
@@ -111,7 +111,7 @@
                             <p class="text-lg text-red-500 font-bold mb-3">
                                 <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
                             </p>
-                            <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
+                            <form class="flex" method="post" action="product/detail/${product.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <button type="submit"
                                         class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
@@ -149,7 +149,7 @@
                             <p class="text-lg text-red-500 font-bold mb-3">
                                 <fmt:formatNumber type="number" value="${product.price}" /> 
                             </p>
-                            <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
+                            <form class="flex" method="post" action="product/addToCart/${product.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <button type="submit"
                                         class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">

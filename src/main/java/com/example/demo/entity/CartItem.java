@@ -27,6 +27,10 @@ public class CartItem {
     public Cart getCart() {return this.cart;}
     public Product getProduct() {return this.product;}
     
+public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}

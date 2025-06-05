@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+//mport com.example.demo.entity.Cart;
 import com.example.demo.entity.User;
+import com.example.demo.service.CartService;
 import com.example.demo.service.UserService;
 
 @Controller
 public class RegisterController {
     @Autowired
 	private UserService userService;
+	@Autowired
+	private CartService CartService;
 
 	@GetMapping("/register")
 	public String showRegisterUserForm(Model model) {
@@ -35,11 +39,24 @@ public class RegisterController {
         user.setPassword(encodedPassword);
         try {
         	userService.saveUser(user);
-        } catch (SQLException e) {
-        	model.addAttribute("error", "Đã xảy ra lỗi khi tạo tài khoản. Vui lòng thử lại!");
-        	model.addAttribute("user", user); // giữ lại dữ liệu người dùng đã nhập
-    		return "client/Authen/userRegister"; // quay lại form với thông báo
-        }
+			User newUser = userService.getUserByEmail(user.getEmail());
+			// Khi tao user thi them mot ban ghi cart cho user do
+			if (newUser != null) {
+				boolean isCartCreated = CartService.crateNewCart(newUser);
+				if (!isCartCreated) {
+					model.addAttribute("error", "Giỏ hàng đã tồn tại cho người dùng này.");
+					return "client/auth/register"; // quay lại form với thông báo
+				}
+			}
+		} catch (SQLException e) {
+			if (e.getMessage().contains("Duplicate entry")) {
+				model.addAttribute("error", "Email đã được sử dụng. Vui lòng chọn email khác.");
+			} else {
+				model.addAttribute("error", "Đã xảy ra lỗi khi tạo tài khoản. Vui lòng thử lại!");
+			}
+			model.addAttribute("user", user); // giữ lại dữ liệu người dùng đã nhập
+			return "client/auth/register"; // quay lại form với thông báo
+        } 
 		return "redirect:/login";
 	}
 }
