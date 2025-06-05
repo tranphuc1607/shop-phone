@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.config.ConnectionPoolImlp;
-import com.example.demo.entity.Product;
+//import com.example.demo.entity.Product;
 import com.example.demo.entity.DTO.CartItemViewDTO;
 
 @Repository

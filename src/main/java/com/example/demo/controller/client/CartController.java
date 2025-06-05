@@ -17,7 +17,7 @@ import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.entity.DTO.CartItemViewDTO;
 import com.example.demo.service.CartService;
-import com.example.demo.service.ProductService;
+//import com.example.demo.service.ProductService;
 
 import org.springframework.ui.Model;
 
@@ -25,8 +25,8 @@ import org.springframework.ui.Model;
 public class CartController {
      @Autowired
     private CartService cartService;
-    @Autowired
-    private ProductService productService;
+//    @Autowired
+//    private ProductService productService;
     
     @GetMapping("/homepage/cart")
     public String viewCart(@ModelAttribute("currentUser") User user,Model model) {
