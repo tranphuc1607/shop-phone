@@ -3,7 +3,7 @@ package com.example.demo.service.validator.product;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductSpecification;

@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -215,7 +215,7 @@ public class ProductRepository {
             product.setBrand(brand);
 
             // Specification
-            int specId = rs.getInt("spec_id");
+            //int specId = rs.getInt("spec_id");
             if (!rs.wasNull()) {
                 ProductSpecification spec = new ProductSpecification();
                 spec.setRam(rs.getString("ram"));

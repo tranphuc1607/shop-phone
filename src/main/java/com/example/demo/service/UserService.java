@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+//import org.springframework.ui.Model;
 
 import com.example.demo.repository.UserRepository;
 
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
 
 import com.example.demo.entity.User;
 
