@@ -16,7 +16,9 @@ public class CartItemViewDTO {
         this.productPrice = productPrice;
         this.quantity = quantity;
     }
-
+    public CartItemViewDTO() {
+        // cần constructor rỗng để Spring có thể tự động khởi tạo object khi bind cartItems[0]
+    }
     // Getters
     public int getCartItemId() { return cartItemId; }
     public int getProductId() { return productId; }
@@ -24,4 +26,12 @@ public class CartItemViewDTO {
     public String getProductImage() { return productImage; }
     public String getProductPrice() { return productPrice; }
     public int getQuantity() { return quantity; }
+    //setters
+    public void setCartItemId(int cartItemId) { this.cartItemId = cartItemId; }
+    public void setProductId(int productId) { this.productId = productId; }
+    public void setProductName(String productName) { this.productName = productName; }
+    public void setProductImage(String productImage) { this.productImage = productImage; }
+    public void setProductPrice(String productPrice) { this.productPrice = productPrice; }
+    public void setQuantity(int quantity) { this.quantity = quantity;}
+
 }

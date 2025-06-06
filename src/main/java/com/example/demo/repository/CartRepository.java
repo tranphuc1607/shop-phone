@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 //import java.util.ArrayList;
 //import java.util.List;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import com.example.demo.config.ConnectionPoolImlp;
 import com.example.demo.entity.Cart;
 //import com.example.demo.entity.CartItem;
 import com.example.demo.entity.User;
+//import com.example.demo.entity.DTO.CartItemViewDTO;
 //import com.example.demo.entity.DTO.CartItemViewDTO;
 
 @Repository
@@ -98,5 +100,31 @@ public class CartRepository {
             }
         }
         return cart;
+    }
+    public void clearCart(List<Integer> cartItemsId) throws SQLException {
+
+        String sql = "DELETE FROM cart_item WHERE id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            for (int cartItemId : cartItemsId) {
+                ps.setInt(1, cartItemId);
+                ps.executeUpdate();
+                connection.commit();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error deleting cart items for cart: " + e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
     }
 }

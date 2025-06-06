@@ -55,7 +55,7 @@
                                     </button>
                                 </form>
                                  <!-- Xóa sản phẩm khỏi giỏ hàng -->
-                                  <form action="/cart/delete/${cartItem.cartItemId}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="display:inline;">
+                                  <form action="/cart/delete/${cartItem.cartItemId}" method="post"  style="display:inline;">
                                     <button type="submit" class="text-white px-3 py-1 rounded" style="background: none; border: none;">
                                         <svg class="w-[20px] h-[20px] hover:fill-red-700 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                             <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
@@ -84,7 +84,7 @@
                     Thêm sản phẩm
                 </a>
                 <c:if test="${not empty cartItems}">
-                    <form action="/cart/checkout" method="post" onsubmit="return confirm('Xác nhận đặt hàng?');">
+                    <form action="/cart/checkout" method="post">
                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
                             Đặt hàng
                         </button>

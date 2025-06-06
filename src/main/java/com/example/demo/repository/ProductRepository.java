@@ -240,6 +240,31 @@ public class ProductRepository {
     return product;
 }
 
+public void updateProductQuantity(int productId, int newQuantity) throws SQLException {
+    Connection conn = null;
+    PreparedStatement ps = null;
+
+    try {
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        String sql = "UPDATE product SET stock_quantity = stock_quantity - ? WHERE id = ? AND stock_quantity >= ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, newQuantity);
+        ps.setInt(2, productId);
+        ps.setInt(3, newQuantity); // Đảm bảo rằng số lượng tồn kho không âm
+        int rowsUpdated = ps.executeUpdate();
+        conn.commit(); // Commit the transaction
+        if (rowsUpdated == 0) {
+            throw new SQLException("Không tìm thấy sản phẩm với ID = " + productId);
+        }
+
+    } catch (SQLException e) {
+        throw new SQLException("Error updating product quantity", e);
+    } finally {
+        if (ps != null) ps.close();
+        if (conn != null) ConnectionPoolImlp.getInstance().releaseConnection(conn);
+    }
+}
+
 
 public void updateProduct(Product product) throws SQLException {
     Connection conn = null;

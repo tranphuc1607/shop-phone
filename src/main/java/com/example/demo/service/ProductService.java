@@ -46,6 +46,8 @@ public class ProductService {
     public void handleUpdateProduct(Product product) throws SQLException {
         this.productRepository.updateProduct(product);
     }
-    
+    public void handleUpdateProductQuantity(int productId, int quantity) throws SQLException {
+        this.productRepository.updateProductQuantity(productId, quantity);
+    }
     
 }
