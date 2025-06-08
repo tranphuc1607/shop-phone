@@ -37,6 +37,8 @@ public class Product {
 
 	private String image;
 
+	private boolean is_deleted = false;
+
 
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
@@ -133,8 +135,32 @@ public class Product {
 		this.cartItems = cartItems;
 		this.orderItems = orderItems;
 	}
+
+	
     
-	public Product() {}
+	
+
+	
+
+	public Product(int id, String name, String price, String stockQuantity, Brand brand,String image,boolean is_deleted) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.stockQuantity = stockQuantity;
+    this.brand = brand;
+	this.image = image;
+	this.is_deleted = is_deleted;
+}
+
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+                + ", stockQuantity=" + stockQuantity + ", createdAt=" + createdAt + ", brand=" + brand + ", image="
+                + image + ", specification=" + specification + ", cartItems=" + cartItems + ", orderItems=" + orderItems
+                + "]";
+    }
+
+    public Product() {}
 	
     
 }

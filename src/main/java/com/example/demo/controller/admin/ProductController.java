@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
@@ -37,12 +38,12 @@ public class ProductController {
         this.uploadFileService = uploadFileService;
         this.productValidator = productValidator;
     }
-    @GetMapping("/admin/product")
-    public String getProduct(Model model) throws SQLException {
-        List<Product> listProduct = this.productService.getListProduct();
-        model.addAttribute("products",listProduct);
-        return "admin/product/showInterface";
-    }
+    // @GetMapping("/admin/product")
+    // public String getProduct(Model model) throws SQLException {
+    //     List<Product> listProduct = this.productService.getListProduct();
+    //     model.addAttribute("products",listProduct);
+    //     return "admin/product/showInterface";
+    // }
       @GetMapping("/admin/product/create")
     public String getCreateProductPage(Model model) throws SQLException {
         model.addAttribute("listBrand",this.productService.getListBrand());
@@ -117,5 +118,31 @@ public String updateProduct(
 
     return "redirect:/admin/product";
 }
+
+ @GetMapping("/admin/product/delete/{id}")
+    public String getDeleteProductProductPage(RedirectAttributes redirectAttributes, @PathVariable int id) throws SQLException {
+        this.productService.deleteProduct(id);
+	    redirectAttributes.addFlashAttribute("success", "Xóa thành công!");
+	    return "redirect:/admin/product";
+    }
+
+      @GetMapping("/admin/product")
+    public String listProducts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "4") int size,
+            Model model) {
+
+        List<Product> products = this.productService.getProductsByPage(page, size);
+        System.out.println(products);
+        long totalProducts = this.productService.getTotalProductCount();
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+
+       return "admin/product/showInterface";
+    }
 
 }

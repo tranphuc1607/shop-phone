@@ -49,5 +49,15 @@ public class ProductService {
     public void handleUpdateProductQuantity(int productId, int quantity) throws SQLException {
         this.productRepository.updateProductQuantity(productId, quantity);
     }
-    
+    public void deleteProduct(int productId) throws SQLException {
+        this.productRepository.updateProductIsDeleted(productId);
+    }
+
+     public List<Product> getProductsByPage(int page, int size) {
+        return productRepository.findAll(page, size);
+    }
+
+    public long getTotalProductCount() {
+        return productRepository.count();
+    }
 }

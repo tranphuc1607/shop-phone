@@ -50,7 +50,7 @@ public class CartController {
                             @ModelAttribute("currentUser") User user) {
         // Lấy user, thêm vào giỏ hàng
         cartService.addItemToCart(productId, quantity, user);
-        return "redirect:/product"; // Redirect to products page after adding to cart
+        return "redirect:/"; // Redirect to products page after adding to cart
     }
     @PostMapping("/cart/delete/{cartItemId}")
     public String deleteCartItem(@PathVariable int cartItemId, Model model) {

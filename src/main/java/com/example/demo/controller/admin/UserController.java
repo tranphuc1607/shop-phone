@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 //iimport org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
@@ -36,10 +38,17 @@ public class UserController {
     }
 
     @GetMapping("/admin/user")
-    public String getAllUser(Model model) throws SQLException {
-    	List<User> users = userService.getAllUser();
-        
-    	model.addAttribute("users", users);
+    public String getAllUser(@RequestParam(defaultValue = "1") int page,
+                            @RequestParam(defaultValue = "2") int size,
+                            Model model) throws SQLException {
+    	List<User> users = this.userService.getUsersByPage(page, size);
+        long totalUser = this.userService.getTotalUserCount();
+        int totalPages = (int) Math.ceil((double) totalUser / size);
+
+        model.addAttribute("users", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
         return "admin/user/showInterface";
     }
 

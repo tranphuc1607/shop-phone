@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.config.ConnectionPoolImlp;
@@ -18,6 +20,12 @@ import com.example.demo.entity.ProductSpecification;
 
 @Repository
 public class ProductRepository {
+
+     private final JdbcTemplate jdbcTemplate;
+
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
        public List<Brand> getAllBrands() throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -308,8 +316,7 @@ public void updateProduct(Product product) throws SQLException {
         int updatedSpecRows = psUpdateSpec.executeUpdate();
 
         if (updatedSpecRows == 0) {
-            // Nếu không có bản ghi specs hiện tại, có thể insert mới (tùy nghiệp vụ)
-            String sqlInsertSpec = "INSERT INTO specification (product_id, ram, storage, screen, battery, os, chipset) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sqlInsertSpec = "INSERT INTO product_specification (product_id, ram, storage, screen, battery, os, chipset) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement psInsertSpec = conn.prepareStatement(sqlInsertSpec)) {
                 psInsertSpec.setInt(1, product.getId());
                 psInsertSpec.setString(2, product.getSpecification().getRam());
@@ -340,7 +347,83 @@ public void updateProduct(Product product) throws SQLException {
     }
 }
 
-
-
-
+ public List<Product> findAll(int page, int size) {
+    int offset = (page - 1) * size;
+    String sql = "SELECT p.id, p.name, p.price, p.stock_quantity, p.image, p.is_deleted, " +
+             "b.id AS brand_id, b.name AS brand_name " +
+             "FROM product p " +
+             "JOIN brand b ON p.brand_id = b.id " +
+             "WHERE p.is_deleted = false " +
+             "LIMIT ? OFFSET ?";
+    return jdbcTemplate.query(sql, new Object[]{size, offset}, productRowMapper());
 }
+
+
+    public long count() {
+        String sql = "SELECT COUNT(*) FROM product";
+        return jdbcTemplate.queryForObject(sql, Long.class);
+    }
+
+  public void updateProductIsDeleted(int productId) throws SQLException {
+    Connection conn = null;
+    PreparedStatement psUpdateProduct = null;
+
+    try {
+        // Kết nối đến cơ sở dữ liệu
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        conn.setAutoCommit(false);
+
+        // Câu lệnh SQL để cập nhật trường is_deleted thành TRUE (đánh dấu đã xóa)
+        String sqlUpdateProduct = "UPDATE product SET is_deleted = TRUE WHERE id = ?";
+        psUpdateProduct = conn.prepareStatement(sqlUpdateProduct);
+        
+        // Đặt giá trị ID sản phẩm cần xóa
+        psUpdateProduct.setInt(1, productId);
+
+        // Thực thi câu lệnh cập nhật
+        int updatedRows = psUpdateProduct.executeUpdate();
+
+        // Kiểm tra xem có sản phẩm nào bị ảnh hưởng không
+        if (updatedRows == 0) {
+            throw new SQLException("Không tìm thấy sản phẩm với ID = " + productId);
+        }
+
+        // Commit giao dịch
+        conn.commit();
+
+    } catch (SQLException e) {
+        // Nếu có lỗi, rollback giao dịch
+        if (conn != null) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        throw e;
+    } finally {
+        // Đóng PreparedStatement và Connection
+        if (psUpdateProduct != null) psUpdateProduct.close();
+        if (conn != null) conn.close();
+    }
+}
+
+
+    // Hàm RowMapper để ánh xạ kết quả SQL thành đối tượng Product
+    private RowMapper<Product> productRowMapper() {
+    return (rs, rowNum) -> new Product(
+            rs.getInt("id"),
+            rs.getString("name"),
+            rs.getString("price"),
+            rs.getString("stock_quantity"),
+            new Brand(rs.getInt("brand_id"), rs.getString("brand_name")),
+            rs.getString("image"),
+             rs.getBoolean("is_deleted")
+    );
+
+    
+}
+
+
+    }
+

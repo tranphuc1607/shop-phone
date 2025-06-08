@@ -40,5 +40,12 @@ public class Brand {
     	this.name = name;
     	this.products = product;
     }
+    @Override
+    public String toString() {
+        return "Brand [id=" + id + ", name=" + name + ", products=" + products + ", getId()=" + getId() + ", getName()="
+                + getName() + ", getProduct()=" + getProduct() + ", getClass()=" + getClass() + ", hashCode()="
+                + hashCode() + ", toString()=" + super.toString() + "]";
+    }
+    
     
 }

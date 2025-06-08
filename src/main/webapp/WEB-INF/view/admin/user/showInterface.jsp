@@ -126,7 +126,17 @@
                                   </tbody>
                               </table>
                           </div>
-      
+       <div class="mt-6 flex justify-center space-x-1">
+
+        <c:forEach begin="1" end="${totalPages}" var="i">
+            <a href="?page=${i}&size=${size}"
+               class="px-3 py-1 rounded 
+                      ${i == currentPage ? 'bg-blue-600 text-white font-bold' : 'bg-gray-200 text-gray-700'} 
+                      hover:bg-blue-400 hover:text-white transition">
+                ${i}
+            </a>
+        </c:forEach>
+    </div>
                       </div>
                     </div>
                 </main>

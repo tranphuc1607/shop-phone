@@ -66,10 +66,13 @@
                         <input type="hidden" name="productId" value="${product.id}" />
                         <input type="hidden" name="quantity" id="quantityInput" value="1" />
 
-                        <button type="submit"
-                            class="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
-                        </button>
+                        <div class="flex justify-between px-[100px]">
+                            <button type="submit"
+                                class="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                            </button>
+                            <a class = "mr-[70px] bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" href = "/">Quay lại</a>
+                        </div>
                     </form>
                 </c:if>
 

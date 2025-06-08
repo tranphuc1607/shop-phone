@@ -91,7 +91,10 @@
                     </div>
                 </div>
                 
-                <div class="flex justify-end mt-6">
+                <div class="flex justify-around mt-6">
+                    <a href = "/homepage/cart" class = "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded">
+                        Quay lại
+                    </a>
                     <button type="submit"
                             class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded">
                         Xác nhận đặt hàng

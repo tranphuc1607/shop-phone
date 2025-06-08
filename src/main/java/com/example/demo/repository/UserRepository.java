@@ -11,12 +11,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.example.demo.config.ConnectionPoolImlp;
+import com.example.demo.entity.Brand;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 // import com.mysql.cj.jdbc.exceptions.MySQLTransactionRollbackException;
 
@@ -335,6 +338,32 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(sql, Integer.class, startDate, endDate);
     }
 
-   
+    public List<User> findAll(int page, int size) {
+        int offset = (page - 1) * size;
+        String sql = "SELECT * FROM users LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, userRowMapper());
+    }
+
+    // Hàm đếm tổng số user
+    public long count() {
+        String sql = "SELECT COUNT(*) FROM users";
+        return jdbcTemplate.queryForObject(sql, Long.class);
+    }
+
+    // RowMapper ánh xạ ResultSet thành User object
+    private RowMapper<User> userRowMapper() {
+        return (rs, rowNum) -> {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setPhone(rs.getString("phone"));
+            user.setAddress(rs.getString("address"));
+            user.setRole(rs.getString("role"));
+            user.setCreatedAt(rs.getString("created_at"));
+            return user;
+        };
+    }
     
 }

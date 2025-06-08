@@ -63,8 +63,8 @@
         </head>
         <body>
             <div class ="flex h-[100vh]">
-              <jsp:include page="../layout/header.jsp" />
-              <jsp:include page="../layout/navbar.jsp" />
+              <jsp:include page="../../layout/header.jsp" />
+              <jsp:include page="../../layout/navbar.jsp" />
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
                 <main>
                     <div class="container mx-auto p-4">
@@ -87,25 +87,28 @@
                                   <thead class="bg-gray-100">
                                       <tr>
                                           <th class="py-2 px-4 text-left">ID</th>
-                                          <th class="py-2 px-4 text-left">Tên</th>
-                                          <th class="py-2 px-4 text-left">Giá</th>
-                                          <th class="py-2 px-4 text-left">Hãng</th>
+                                          <th class="py-2 px-4 text-left">Người dùng</th>
+                                          <th class="py-2 px-4 text-left">Tổng giá</th>
+                                          <th class="py-2 px-4 text-left">Địa chỉ</th>
+                                          <th class="py-2 px-4 text-left">Ngày-Giờ</th>
                                           <th class="py-2 px-4 text-left">Trạng thái</th>
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <c:forEach var="product" items="${products}">
+                                      <c:forEach var="order" items="${orders}">
                                           <tr class="border-t">
-                                              <td class="py-2 px-4">${product.getId()}</td>
-                                              <td class="py-2 px-4">${product.getName()}</td>
+                                              <td class="py-2 px-4">${order.getId()}</td>
+                                              <td class="py-2 px-4">${order.getUser().getName()}</td>
                                               <td class="py-2 px-4">
-                                                  <fmt:formatNumber value="${product.getPrice()}" />
+                                                  <fmt:formatNumber value="${order.getTotalAmount()}" />
                                               </td>
-                                              <td class="py-2 px-4">${product.getFactory()}</td>
+                                              <td class="py-2 px-4">${order.getShippingAddress()}</td>
+                                              <td class="py-2 px-4">${order.getOrderDate()}</td>
+                                              <td class="py-2 px-4">${order.getStatus()}</td>
                                               <td class="py-2 px-4 space-x-2">
-                                                  <a href="/admin/product/${product.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
-                                                  <a href="/admin/product/update/${product.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Update</a>
-                                                  <a href="/admin/product/delete/${product.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
+                                                  <a href="/admin/order/${order.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
+                                                  <a href="/admin/product/update/${order.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Status</a>
+                                                  <a href="/admin/product/delete/${order.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
                                               </td>
                                           </tr>
                                       </c:forEach>

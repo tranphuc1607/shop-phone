@@ -29,6 +29,8 @@ public class OrderItem {
 		return id;
 	}
 
+	
+
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -71,5 +73,11 @@ public class OrderItem {
 		this.product = product;
 	}
     public OrderItem() {}
+
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 	
 }

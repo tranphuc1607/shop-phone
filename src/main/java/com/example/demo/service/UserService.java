@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 //import org.springframework.ui.Model;
 
 import com.example.demo.repository.UserRepository;
+import com.example.demo.entity.Product;
 
 //import jakarta.servlet.http.HttpSession;
 
@@ -97,6 +98,12 @@ public void updateUser(User user) throws SQLException {
            
         }
         
-        
+         public List<User> getUsersByPage(int page, int size) {
+        return this.userRepository.findAll(page, size);
+    }
+
+    public long getTotalUserCount() {
+        return this.userRepository.count();
+    }
     
     }

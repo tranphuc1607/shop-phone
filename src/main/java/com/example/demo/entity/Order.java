@@ -41,6 +41,8 @@ public class Order {
 		return id;
 	}
 
+	
+
 
 	public User getUser() {
 		return user;
@@ -49,6 +51,18 @@ public class Order {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", user=" + user + ", orderDate=" + orderDate + ", status=" + status
+				+ ", totalAmount=" + totalAmount + ", paymentMethod=" + paymentMethod + ", shippingAddress="
+				+ shippingAddress + ", items=" + items + "]";
+	}
+
+
+
 
 	public LocalDateTime getOrderDate() {
 		return orderDate;
@@ -113,6 +127,13 @@ public class Order {
 	
 
 	public Order() {}
+
+
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 	
     
     

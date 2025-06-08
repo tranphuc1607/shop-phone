@@ -1,12 +1,14 @@
 package com.example.demo.service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Order;
 //import com.example.demo.entity.Order;
 import com.example.demo.entity.DTO.CartItemViewDTO;
 import com.example.demo.repository.CartRepository;
@@ -46,5 +48,11 @@ public class OrderService {
             }
         }
         return true; // Return true if order creation is successful
+    }
+    public List<Order> getAllOrder() throws SQLException {
+        return this.orderRepository.getAllOrders();
+    }
+    public Order getOrderById(int id) throws SQLException {
+       return this.orderRepository.getOrder(id);
     }
 }

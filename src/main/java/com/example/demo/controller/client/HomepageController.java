@@ -2,6 +2,7 @@ package com.example.demo.controller.client;
 
 import java.sql.SQLException;
 //import java.util.List;
+import java.util.List;
 
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 //import com.example.demo.entity.User;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
@@ -35,13 +38,31 @@ public class HomepageController {
     }
 
     @GetMapping("/homepage")
-    public String getHomePage(Model model) throws SQLException {
-        model.addAttribute("products",this.productService.getListProduct());
+    public String getHomePage(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "10") int size,
+                            Model model) throws SQLException {
+        List<Product> products = this.productService.getProductsByPage(page, size);
+        long totalProducts = this.productService.getTotalProductCount();
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
         return "client/home/interface";
     }
     @GetMapping("/")
-    public String getHome(Model model) throws SQLException {
-        model.addAttribute("products",this.productService.getListProduct());
+    public String getHome(@RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "10") int size,
+                            Model model) throws SQLException {
+        List<Product> products = this.productService.getProductsByPage(page, size);
+        long totalProducts = this.productService.getTotalProductCount();
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
         return "client/home/interface";
     }
 
