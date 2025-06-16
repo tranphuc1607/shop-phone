@@ -144,17 +144,29 @@
                         <form:errors path="specification.battery" class="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label for="os" class="block font-semibold">Hệ điều hành</label>
-                        <form:input path="specification.os" id="os" class="w-full p-2 border rounded" />
-                        <!-- Hiển thị lỗi cho trường này -->
-                        <form:errors path="specification.os" class="text-red-500 text-sm" />
-                    </div>
-                    <div>
-                        <label for="chipset" class="block font-semibold">Chipset</label>
-                        <form:input path="specification.chipset" id="chipset" class="w-full p-2 border rounded" />
-                        <!-- Hiển thị lỗi cho trường này -->
-                        <form:errors path="specification.chipset" class="text-red-500 text-sm" />
-                    </div>
+                      <label for="os" class="block font-semibold">Hệ điều hành</label>
+                      <form:select path="specification.os" id="os" class="w-full p-2 border rounded">
+                          <form:option value="" label="-- Chọn hệ điều hành --"/>
+                          <form:option value="ANDROID">ANDROID</form:option>
+                          <form:option value="IOS">IOS</form:option>
+                          <form:option value="WINDOWS">WINDOWS</form:option>
+                          <form:option value="LINUX">LINUX</form:option>
+                      </form:select>
+                      <form:errors path="specification.os" class="text-red-500 text-sm" />
+                  </div>
+
+                  <div>
+                      <label for="chipset" class="block font-semibold">Chipset</label>
+                      <form:select path="specification.chipset" id="chipset" class="w-full p-2 border rounded">
+                          <form:option value="" label="-- Chọn chipset --"/>
+                          <form:option value="Qualcomm">Qualcomm</form:option>
+                          <form:option value="Exynos">Exynos</form:option>
+                          <form:option value="Apple A">Apple A</form:option>
+                          <form:option value="MediaTek">MediaTek</form:option>
+                      </form:select>
+                      <form:errors path="specification.chipset" class="text-red-500 text-sm" />
+                  </div>
+
                 </div>
 
                 <!-- Upload 1 ảnh -->

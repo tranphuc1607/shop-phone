@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +33,7 @@ public class OrderRepository {
             ps.setString(1, java.time.LocalDateTime.now().toString()); // Assuming order_date is a timestamp
             ps.setString(2, paymentMethod);
             ps.setString(3, userAddress);
-            ps.setString(4, "Pending"); // Default status
+            ps.setString(4, "Chưa xác nhận"); // Default status
             ps.setBigDecimal(5, totalAmount);
             ps.setInt(6, userId);
             ps.executeUpdate();
@@ -106,56 +108,82 @@ public class OrderRepository {
         }
     }
 
-  public List<Order> getAllOrders() throws SQLException {
+  public List<Order> getOrders(String status, int page, int size) throws SQLException {
     List<Order> orders = new ArrayList<>();
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    Map<Integer, Order> orderMap = new HashMap<>();
 
-    try {
-        // Kết nối cơ sở dữ liệu (sử dụng ConnectionPoolImlp của bạn)
-        conn = ConnectionPoolImlp.getInstance().getConnection();
+    StringBuilder sql = new StringBuilder(
+        "SELECT o.id AS order_id, o.order_date, o.status, o.total_amount, " +
+        "o.payment_method, o.shipping_address, u.id AS user_id, u.name, u.email, " +
+        "oi.id AS item_id, oi.quantity, oi.price, " +
+        "p.id AS product_id, p.name AS product_name, p.price AS product_price " +
+        "FROM orders o " +
+        "JOIN users u ON o.user_id = u.id " +
+        "JOIN order_item oi ON o.id = oi.order_id " +
+        "JOIN product p ON oi.product_id = p.id "
+    );
 
-        // Câu lệnh SQL để lấy tất cả đơn hàng và thông tin người dùng
-        String sql = "SELECT o.id AS order_id, o.order_date, o.status, o.total_amount, " +
-                     "o.payment_method, o.shipping_address, u.id AS user_id, u.name, u.email " +
-                     "FROM orders o " +
-                     "JOIN users u ON o.user_id = u.id";
-                     
-        ps = conn.prepareStatement(sql);
-        rs = ps.executeQuery();
+    // Thêm điều kiện WHERE nếu có status
+    if (status != null && !status.trim().isEmpty()) {
+        sql.append("WHERE o.status = ? ");
+    }
 
-        // Duyệt qua kết quả và tạo đối tượng Order
-        while (rs.next()) {
-            Order order = new Order();
-            order.setId(rs.getInt("order_id"));
-            order.setOrderDate(rs.getTimestamp("order_date").toLocalDateTime());
-            order.setStatus(rs.getString("status"));
-            order.setTotalAmount(rs.getBigDecimal("total_amount"));
-            order.setPaymentMethod(rs.getString("payment_method"));
-            order.setShippingAddress(rs.getString("shipping_address"));
+    sql.append("ORDER BY o.id DESC LIMIT ? OFFSET ?");
 
-            // Tạo đối tượng User và gán vào Order
-            User user = new User();
-            user.setId(rs.getInt("user_id"));
-            user.setName(rs.getString("name"));
-            user.setEmail(rs.getString("email"));
+    try (Connection conn = ConnectionPoolImlp.getInstance().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
-            // Gán user vào order
-            order.setUser(user);
+        int paramIndex = 1;
 
-            // Thêm đơn hàng vào danh sách
-            orders.add(order);
+        if (status != null && !status.trim().isEmpty()) {
+            ps.setString(paramIndex++, status);
         }
 
+        ps.setInt(paramIndex++, size);
+        ps.setInt(paramIndex, (page - 1) * size);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                Order order = orderMap.get(orderId);
+                if (order == null) {
+                    order = new Order();
+                    order.setId(orderId);
+                    order.setOrderDate(rs.getTimestamp("order_date").toLocalDateTime());
+                    order.setStatus(rs.getString("status"));
+                    order.setTotalAmount(rs.getBigDecimal("total_amount"));
+                    order.setPaymentMethod(rs.getString("payment_method"));
+                    order.setShippingAddress(rs.getString("shipping_address"));
+
+                    User user = new User();
+                    user.setId(rs.getInt("user_id"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    order.setUser(user);
+
+                    order.setItems(new ArrayList<>());
+                    orderMap.put(orderId, order);
+                }
+
+                OrderItem item = new OrderItem();
+                item.setId(rs.getInt("item_id"));
+                item.setQuantity(rs.getInt("quantity"));
+                item.setPrice(rs.getBigDecimal("price"));
+
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("product_name"));
+                product.setPrice(rs.getString("product_price"));
+
+                item.setProduct(product);
+                order.getItems().add(item);
+            }
+
+            orders.addAll(orderMap.values());
+        }
     } catch (SQLException e) {
         e.printStackTrace();
-        throw e;  // Ném lại ngoại lệ nếu có lỗi
-    } finally {
-        // Đảm bảo đóng tài nguyên khi xong
-        if (rs != null) rs.close();
-        if (ps != null) ps.close();
-        if (conn != null) conn.close();
+        throw e;
     }
 
     return orders;
@@ -235,5 +263,36 @@ public Order getOrder(int orderId) throws SQLException {
 
         return order;  // Trả về đơn hàng với chi tiết đầy đủ
     }
+
+    public long countOrders(String status) throws SQLException {
+    long count = 0;
+    String sql = "SELECT COUNT(DISTINCT o.id) AS total FROM orders o";
+
+    // Nếu có status thì thêm điều kiện WHERE
+    if (status != null && !status.trim().isEmpty()) {
+        sql += " WHERE o.status = ?";
+    }
+
+    try (Connection conn = ConnectionPoolImlp.getInstance().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        if (status != null && !status.trim().isEmpty()) {
+            ps.setString(1, status);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                count = rs.getLong("total");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw e;
+    }
+
+    return count;
+}
+
+
 
 }

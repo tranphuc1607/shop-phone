@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/admin/user")
     public String getAllUser(@RequestParam(defaultValue = "1") int page,
-                            @RequestParam(defaultValue = "2") int size,
+                            @RequestParam(defaultValue = "5") int size,
                             Model model) throws SQLException {
     	List<User> users = this.userService.getUsersByPage(page, size);
         long totalUser = this.userService.getTotalUserCount();

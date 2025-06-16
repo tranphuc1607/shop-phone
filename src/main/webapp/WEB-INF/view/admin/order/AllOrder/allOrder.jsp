@@ -116,31 +116,19 @@
                               </table>
                           </div>
       
-                          <!-- Pagination -->
-                          <nav class="flex justify-center mt-8">
-                              <ul class="inline-flex items-center -space-x-px">
-                                  <li>
-                                      <a href="/admin/product?page=${currentPage-1}" 
-                                          class="px-3 py-2 ml-0 leading-tight ${currentPage eq 1 ? 'pointer-events-none text-gray-400' : 'text-blue-500 hover:bg-gray-200'} border border-gray-300 rounded-l-lg">
-                                          &laquo;
-                                      </a>
-                                  </li>
-                                  <c:forEach begin="1" end="${totalPages}" varStatus="loop">
-                                      <li>
-                                          <a href="/admin/product?page=${loop.index}" 
-                                              class="px-3 py-2 leading-tight ${loop.index eq currentPage ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-gray-200'} border border-gray-300">
-                                              ${loop.index}
-                                          </a>
-                                      </li>
-                                  </c:forEach>
-                                  <li>
-                                      <a href="/admin/product?page=${currentPage+1}" 
-                                          class="px-3 py-2 leading-tight ${currentPage eq totalPages ? 'pointer-events-none text-gray-400' : 'text-blue-500 hover:bg-gray-200'} border border-gray-300 rounded-r-lg">
-                                          &raquo;
-                                      </a>
-                                  </li>
-                              </ul>
-                          </nav>
+                         <div style="margin-top: 10px;">
+                            <div class="mt-6 flex justify-center space-x-1">
+
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <a href="?page=${i}&size=${size}"
+                                      class="px-3 py-1 rounded 
+                                              ${i == currentPage ? 'bg-blue-600 text-white font-bold' : 'bg-gray-200 text-gray-700'} 
+                                              hover:bg-blue-400 hover:text-white transition">
+                                        ${i}
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div> 
       
                       </div>
                       </div>

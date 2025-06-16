@@ -129,11 +129,10 @@ public String updateProduct(
       @GetMapping("/admin/product")
     public String listProducts(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "5") int size,
             Model model) {
 
         List<Product> products = this.productService.getProductsByPage(page, size);
-        System.out.println(products);
         long totalProducts = this.productService.getTotalProductCount();
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 

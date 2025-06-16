@@ -49,10 +49,14 @@ public class OrderService {
         }
         return true; // Return true if order creation is successful
     }
-    public List<Order> getAllOrder() throws SQLException {
-        return this.orderRepository.getAllOrders();
+    public List<Order> getOrder(String status,int page,int size) throws SQLException {
+        return this.orderRepository.getOrders(status,page,size);
     }
     public Order getOrderById(int id) throws SQLException {
        return this.orderRepository.getOrder(id);
+    }
+
+     public long getTotalProductCount(String status) throws SQLException {
+        return this.orderRepository.countOrders(status);
     }
 }

@@ -40,7 +40,7 @@
                           <a href ="/admin/order/comfirmed" class=" block px-4 py-2 text-sm text-gray-700">Đơn hàng đã xác nhận</a>
                         </li>
                         <li class="hover:bg-[#1890FF]/20">
-                          <a href ="/admin/order/processed" class=" block px-4 py-2 text-sm text-gray-700">Đơn hàng đã xử lí</a>
+                          <a href ="/admin/order/processed" class=" block px-4 py-2 text-sm text-gray-700">Đơn hàng đang vận chuyển</a>
                         </li>
                         <li class="hover:bg-[#1890FF]/20">
                           <a href ="/admin/order/complete" class=" block px-4 py-2 text-sm text-gray-700">Đơn hàng đã hoàn thành</a>
