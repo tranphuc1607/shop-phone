@@ -95,102 +95,33 @@
                 </div>
                 <div class="col-span-12 sm:col-span-9 p-4">
                     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div class="fruite-img">
-                                <img src="https://bizweb.dktcdn.net/thumb/large/100/383/803/products/13-ccbad032-7c86-4434-9add-edd47aafa0be.jpg?v=1586770955523" alt="${product.name}"
-                                     class="w-full h-44 object-cover rounded-t-lg">
-                            </div>
+                         <c:forEach var="product" items="${products}">
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <!-- Hình ảnh sản phẩm -->
+                    <div class="fruite-img">
+                        <img src="/images/${product.image}" alt="lỗi ảnh"
+                             class="w-full h-44 object-cover rounded-t-lg">
+                    </div>
                 
-                            <div class="p-4">
-                                <h4 class="text-sm font-semibold text-gray-800 mb-2 flex justify-center ">
-                                    <a href="/product/${product.id}" class=" no-underline text-[#000]-600 ">Iphone 16 Pro Max</a>
-                                </h4>
-                                <div class="flex flex-col justify-center items-center">
-                                    <p class="text-lg text-red-500 font-bold mb-3">
-                                        <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
-                                    </p>
-                                    <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <button type="submit"
-                                                class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
-                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                    <div class="p-4">
+                        <h4 class="text-sm font-semibold text-gray-800 mb-2 flex justify-center ">
+                            <a href="/product/detail" class=" no-underline text-[#000]-600 ">${product.name}</a>
+                        </h4>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-lg text-red-500 font-bold mb-3">
+                                <fmt:formatNumber type="number" value="${product.price}" /> 
+                            </p>
+                            <form class="flex" method="post" action="product/addToCart/${product.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <button type="submit"
+                                        class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
+                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                </button>
+                            </form>
                         </div>
-                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div class="fruite-img">
-                                <img src="https://bizweb.dktcdn.net/thumb/large/100/383/803/products/13-ccbad032-7c86-4434-9add-edd47aafa0be.jpg?v=1586770955523" alt="${product.name}"
-                                     class="w-full h-44 object-cover rounded-t-lg">
-                            </div>
-                
-                            <div class="p-4">
-                                <h4 class="text-sm font-semibold text-gray-800 mb-2 flex justify-center ">
-                                    <a href="/product/${product.id}" class=" no-underline text-[#000]-600 ">Iphone 16 Pro Max</a>
-                                </h4>
-                                <div class="flex flex-col justify-center items-center">
-                                    <p class="text-lg text-red-500 font-bold mb-3">
-                                        <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
-                                    </p>
-                                    <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <button type="submit"
-                                                class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
-                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div class="fruite-img">
-                                <img src="https://bizweb.dktcdn.net/thumb/large/100/383/803/products/13-ccbad032-7c86-4434-9add-edd47aafa0be.jpg?v=1586770955523" alt="${product.name}"
-                                     class="w-full h-44 object-cover rounded-t-lg">
-                            </div>
-                
-                            <div class="p-4">
-                                <h4 class="text-sm font-semibold text-gray-800 mb-2 flex justify-center ">
-                                    <a href="/product/${product.id}" class=" no-underline text-[#000]-600 ">Iphone 16 Pro Max</a>
-                                </h4>
-                                <div class="flex flex-col justify-center items-center">
-                                    <p class="text-lg text-red-500 font-bold mb-3">
-                                        <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
-                                    </p>
-                                    <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <button type="submit"
-                                                class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
-                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div class="fruite-img">
-                                <img src="https://bizweb.dktcdn.net/thumb/large/100/383/803/products/13-ccbad032-7c86-4434-9add-edd47aafa0be.jpg?v=1586770955523" alt="${product.name}"
-                                     class="w-full h-44 object-cover rounded-t-lg">
-                            </div>
-                
-                            <div class="p-4">
-                                <h4 class="text-sm font-semibold text-gray-800 mb-2 flex justify-center ">
-                                    <a href="/product/${product.id}" class=" no-underline text-[#000]-600 ">Iphone 16 Pro Max</a>
-                                </h4>
-                                <div class="flex flex-col justify-center items-center">
-                                    <p class="text-lg text-red-500 font-bold mb-3">
-                                        <fmt:formatNumber type="number" value="${product.price}" /> 1.000.000 VND
-                                    </p>
-                                    <form class="flex" method="post" action="/add-product-to-cart/${product.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <button type="submit"
-                                                class="btn border border-gray-300 rounded-full px-4 py-2 text-primary hover:bg-gray-100 transition">
-                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </c:forEach>
                     </div>
                 </div>
               </div>

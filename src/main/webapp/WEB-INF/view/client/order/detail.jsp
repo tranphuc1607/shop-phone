@@ -121,16 +121,16 @@
                                         <div>
                                             <span class="font-semibold text-gray-700">Trạng thái:</span>
                                             <c:choose>
-                                                <c:when test="${order.status == 'pending' || order.status == 'PENDING'}">
+                                                <c:when test="${order.status == 'Chờ xác nhận'}">
                                                     <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium status-pending">Chờ xác nhận</span>
                                                 </c:when>
-                                                <c:when test="${order.status == 'confirmed' || order.status == 'CONFIRMED'}">
+                                                <c:when test="${order.status == 'Đã xác nhận'}">
                                                     <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium status-confirmed">Đã xác nhận</span>
                                                 </c:when>
-                                                <c:when test="${order.status == 'shipping' || order.status == 'SHIPPING'}">
+                                                <c:when test="${order.status == 'Đang vận chuyển'}">
                                                     <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium status-shipping">Đang giao hàng</span>
                                                 </c:when>
-                                                <c:when test="${order.status == 'delivered' || order.status == 'DELIVERED'}">
+                                                <c:when test="${order.status == 'Đã hoàn thành'}">
                                                     <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium status-delivered">Đã giao hàng</span>
                                                 </c:when>
                                                 <c:when test="${order.status == 'cancelled' || order.status == 'CANCELLED'}">
@@ -261,7 +261,7 @@
                                 
                                 <!-- Action Buttons -->
                                 <div class="mt-6 space-y-3">
-                                    <c:if test="${order.status == 'pending' || order.status == 'PENDING'}">
+                                    <c:if test="${order.status == 'Chưa xác nhận'}">
                                         <button onclick="cancelOrder(${order.id})" 
                                                 class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                                             <i class="fas fa-times mr-2"></i>Hủy đơn hàng

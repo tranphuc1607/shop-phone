@@ -51,6 +51,8 @@ public class ClientOrderController {
             return "client/order/detail";
         }
     }
+
+    
     @PostMapping("/order_his/cancel")
     public String cancelOrder(@ModelAttribute("currentUser") User user,
                               @RequestParam("orderId") int orderId,

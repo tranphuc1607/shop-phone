@@ -1,5 +1,8 @@
 package com.example.demo.controller.client;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,9 @@ public class ProductControler {
     @Autowired
     private ProductService productService;
     @GetMapping("/product")
-    public String getProduct() {
+    public String getProduct(Model model) throws SQLException {
+        List<Product> products = this.productService.getListProduct();
+        model.addAttribute("products", products);
         return "client/product/interface";
     }
 

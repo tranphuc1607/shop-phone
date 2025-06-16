@@ -17,7 +17,7 @@
             <p class="text-gray-700 mb-6">Cảm ơn bạn đã mua hàng tại <strong>ShopPhone</strong>. Đơn hàng của bạn đang được xử lý và sẽ sớm được giao.</p>
             <div class="flex justify-center space-x-4">
                 <a href="/product" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Tiếp tục mua sắm</a>
-                <a href="/orders" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">Xem đơn hàng</a>
+                <a href="/homepage/cart" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">Xem đơn hàng</a>
             </div>
         </div>
     </div>

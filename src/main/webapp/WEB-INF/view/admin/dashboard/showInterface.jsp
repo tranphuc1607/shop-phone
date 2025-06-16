@@ -65,51 +65,31 @@
             <div class ="flex h-[100vh]">
               <jsp:include page="../layout/header.jsp" />
               <jsp:include page="../layout/navbar.jsp" />
-              <div id="content" class="pt-[120px] px-[20px] w-full ml-[260px]">
+              <div id="content" style="z-index:-20;" class="flex-1 pt-[120px] px-[20px] w-full ml-[260px]">
                   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex gap-4">
                       <div class=" p-5 rounded-lg border-2 h-[137px]">
-                          <p class ="mb-[7px]">Total page view</p>
+                          <p class ="mb-[7px]">Tổng lượt truy cập website </p>
                           <div class ="h-[26px] flex mb-[20px]">
-                              <p class="font-bold text-[20px]">7374</p>
-                              <button class ="ml-[20px] flex border-2 w-[80px] h-full rounded-[5px] border-[#1890ff] text-[#1890ff]">
-                                  <svg class ="fill-[#1890ff] mr-[4px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z"/></svg>
-                                  <p>774747</p>
-                              </button>
+                              <p class="font-bold text-[20px]">${countVisit}</p>
                           </div>
-                          <p class="text-[12px]">You made an extra 2000 this week </p>
                       </div>
                       <div class="p-5 rounded-lg border-2 h-[137px] ">
-                          <p class ="mb-[7px]">Total Users</p>
+                          <p class ="mb-[7px]">Tổng người dùng</p>
                           <div class ="h-[26px] flex mb-[20px]">
                               <p class="font-bold text-[20px]">${totalCurrentUser}</p>
-                              <button class ="ml-[20px] flex border-2 w-[80px] h-full rounded-[5px] border-[#52c41a] bg-[#e8f4ff] text-[#52c41a]">
-                                  <svg class ="fill-[#52c41a] mr-[4px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z"/></svg>
-                                  <p>${getTotalUsersLastSunday}%</p>
-                              </button>
                           </div>
-                          <p class="text-[12px]">You made an extra 2000 this week </p>
                       </div>
                       <div class="p-5 rounded-lg border-2 h-[137px] ">
-                          <p class ="mb-[7px]">Total Orders</p>
+                          <p class ="mb-[7px]">Tổng đơn hàng</p>
                           <div class ="h-[26px] flex mb-[20px]">
-                              <p class="font-bold text-[20px]">7374</p>
-                              <button class ="ml-[20px] flex border-2 w-[80px] h-full rounded-[5px] border-[#faad14] bg-[#eef9e8] text-[#faad14]">
-                                  <svg class ="fill-[#faad14] mr-[4px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z"/></svg>
-                                  <p>774747</p>
-                              </button>
+                              <p class="font-bold text-[20px]">${totalOrder}</p>
                           </div>
-                          <p class="text-[12px]">You made an extra 2000 this week </p>
                       </div>
                       <div class="p-5 rounded-lg border-2 h-[137px] ">
-                          <p class ="mb-[7px]">Total Sales</p>
+                          <p class ="mb-[7px]">Tổng doanh thu </p>
                           <div class ="h-[26px] flex mb-[20px]">
-                              <p class="font-bold text-[20px]">7374</p>
-                              <button class ="ml-[20px] flex border-2 w-[80px] h-full rounded-[5px] border-[#ff4d4f] bg-[#ffeded] text-[#ff4d4f]">
-                                  <svg class ="fill-[#ff4d4f] mr-[4px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-82.7L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160 384 160z"/></svg>
-                                  <p>774747</p>
-                              </button>
+                              <p class="font-bold text-[20px]">${sum}</p>
                           </div>
-                          <p class="text-[12px]">You made an extra 2000 this week </p>
                       </div>
                     </div>
                   <div class ="mt-[50px] flex justify-between">
@@ -132,51 +112,68 @@
                             <thead>
                               <tr class="bg-gray-100 text-left">
                                 <th class="px-4 py-2 border border-gray-300">Số thứ tự</th>
-                                <th class="px-4 py-2 border border-gray-300">Mã đơn hàng</th>
                                 <th class="px-4 py-2 border border-gray-300">Tổng tiền</th>
                                 <th class="px-4 py-2 border border-gray-300">Thời gian đặt hàng</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border border-gray-300">1</td>
-                                <td class="px-4 py-2 border border-gray-300">ORD12345</td>
-                                <td class="px-4 py-2 border border-gray-300">$120.00</td>
-                                <td class="px-4 py-2 border border-gray-300">2025-04-27 10:30</td>
+
+                               <c:forEach var="order" items="${orders}">
+                                  <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border border-gray-300">${order.getId()}</td>
+                                <td class="px-4 py-2 border border-gray-300">${order.getTotalAmount()}</td>
+                                <td class="px-4 py-2 border border-gray-300">${order.getOrderDate()}</td>
                               </tr>
-                              <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border border-gray-300">2</td>
-                                <td class="px-4 py-2 border border-gray-300">ORD12346</td>
-                                <td class="px-4 py-2 border border-gray-300">$150.50</td>
-                                <td class="px-4 py-2 border border-gray-300">2025-04-26 14:45</td>
-                              </tr>
-                              <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border border-gray-300">3</td>
-                                <td class="px-4 py-2 border border-gray-300">ORD12347</td>
-                                <td class="px-4 py-2 border border-gray-300">$99.99</td>
-                                <td class="px-4 py-2 border border-gray-300">2025-04-25 09:15</td>
-                              </tr>
-                              <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border border-gray-300">4</td>
-                                <td class="px-4 py-2 border border-gray-300">ORD12348</td>
-                                <td class="px-4 py-2 border border-gray-300">$80.00</td>
-                                <td class="px-4 py-2 border border-gray-300">2025-04-24 11:30</td>
-                              </tr>
-                              <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border border-gray-300">5</td>
-                                <td class="px-4 py-2 border border-gray-300">ORD12349</td>
-                                <td class="px-4 py-2 border border-gray-300">$200.75</td>
-                                <td class="px-4 py-2 border border-gray-300">2025-04-23 16:00</td>
-                              </tr>
+                               </c:forEach>
+                              
+                              
                             </tbody>
                           </table>
-                            <div class="mt-[30px]">
-                              <button class="px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-l hover:bg-gray-100">Trước</button>
-                              <button class="px-4 py-2 text-sm text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-100">1</button>
-                              <button class="px-4 py-2 text-sm text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-100">2</button>
-                              <button class="px-4 py-2 text-sm text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-100">3</button>
-                              <button class="px-4 py-2 text-sm text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-100">Tiếp</button>
+                            <div class="mt-8">
+                            <div class="flex justify-center items-center space-x-2">
+                                <c:choose>
+                                    <c:when test="${totalPages <= 7}">
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <a href="?page=${i}&size=${size}"
+                                               class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                      ${i == currentPage ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                                ${i}
+                                            </a>
+                                        </c:forEach>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <a href="?page=1&size=${size}"
+                                           class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                  ${currentPage == 1 ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">1</a>
+
+                                        <c:if test="${currentPage > 4}">
+                                            <span class="px-3 py-2 text-gray-500">...</span>
+                                        </c:if>
+
+                                        <c:forEach var="i" begin="${currentPage - 1}" end="${currentPage + 1}">
+                                            <c:if test="${i > 1 && i < totalPages}">
+                                                <a href="?page=${i}&size=${size}"
+                                                   class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                          ${i == currentPage ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                                    ${i}
+                                                </a>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages - 3}">
+                                            <span class="px-3 py-2 text-gray-500">...</span>
+                                        </c:if>
+
+                                        <a href="?page=${totalPages}&size=${size}"
+                                           class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                  ${currentPage == totalPages ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                            ${totalPages}
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
+                        </div>
                         </div>
                         
                   </div>

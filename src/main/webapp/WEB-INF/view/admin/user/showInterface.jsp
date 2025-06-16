@@ -15,8 +15,100 @@
             <title>Admin-User</title>
             <style>
                 * {
-                    cursor:pointer;
+                    cursor: pointer;
                 }
+
+                body {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                }
+
+                .glass-effect {
+                    background: rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                }
+
+                .card-hover {
+                    transition: all 0.3s ease;
+                    transform: translateY(0);
+                }
+
+                .card-hover:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                }
+
+                .action-btn {
+                    transition: all 0.2s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .action-btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                    transition: left 0.5s;
+                }
+
+                .action-btn:hover::before {
+                    left: 100%;
+                }
+
+                .table-row {
+                    transition: all 0.3s ease;
+                }
+
+                .table-row:hover {
+                    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+                    transform: scale(1.01);
+                }
+
+                .gradient-text {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .floating-card {
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(20px);
+                    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                }
+
+                .pagination-btn {
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .pagination-btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+                }
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .animate-fade-in-up {
+                    animation: fadeInUp 0.6s ease-out;
+                }
+
                 @media (max-width: 1024px) {
                   nav {
                     position: absolute;
@@ -34,7 +126,7 @@
                     transform: translateX(0);
                   }
                   nav.hidden {
-                    display :none;
+                    display: none;
                   }
 
                   header {
@@ -61,87 +153,193 @@
                     margin-left: 260px;
                   }
                 }
-
             </style>
         </head>
         <body>
-            <div class ="flex h-[100vh]">
+            <div class="flex h-[100vh]">
               <jsp:include page="../layout/header.jsp" />
               <jsp:include page="../layout/navbar.jsp" />
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
-                <main>
-                    <div class="container mx-auto p-4">
-                        <h1 class="text-3xl font-bold text-orange-500 mb-4">Quản lí người dùng</h1>
-                        <nav class="text-sm mb-6">
-                          <ol class="list-reset flex text-gray-700">
-                            <li><a href="/admin/dashboard" class="hover:underline text-blue-500">Tổng quan</a></li>
-                            <li><span class="mx-2">/</span></li>
-                            <li>Người dùng</li>
-                          </ol>
-                        </nav>
-                        <div class="mt-8">
-                          <div class="flex flex-col md:flex-row md:justify-between items-center mb-4">
-                              <h3 class="text-xl font-semibold mb-2 md:mb-0">Bảng người dùng</h3>
-                              <a href="/admin/user/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tạo mới người dùng</a>
+                <main class="animate-fade-in-up">
+                    <div class="container mx-auto p-6">
+                        <!-- Header Section -->
+                        <div class="mb-8">
+                            <h1 class="text-4xl text-white font-bold mb-4 flex items-center">
+    <i class="fas fa-users mr-4 text-white"></i>
+    Quản lí người dùng
+</h1>
+
+                            <nav class="text-sm mb-6">
+                              <ol class="flex items-center space-x-2 text-gray-600">
+                                <li><a href="/admin/dashboard" class="hover:text-blue-500 transition-colors duration-200 flex items-center">
+                                    <i class="fas fa-home mr-1"></i>Tổng quan
+                                </a></li>
+                                <li><i class="fas fa-chevron-right text-gray-400"></i></li>
+                                <li class="text-gray-800 font-medium">Người dùng</li>
+                              </ol>
+                            </nav>
+                        </div>
+
+                        <!-- Main Content Card -->
+                        <div class="floating-card rounded-2xl p-8 card-hover">
+                          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6">
+                              <h3 class="text-2xl font-bold text-gray-800 mb-4 lg:mb-0 flex items-center">
+                                  <i class="fas fa-table mr-3 text-purple-500"></i>
+                                  Bảng người dùng
+                              </h3>
+                              <a href="/admin/user/create" 
+                                 class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center action-btn">
+                                  <i class="fas fa-plus mr-2"></i>
+                                  Tạo mới người dùng
+                              </a>
                           </div>
-                          <hr class="mb-4 border-gray-300">
+                          
+                          <div class="h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6"></div>
       
                           <div class="overflow-x-auto">
-                              <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
-                                  <thead class="bg-gray-100">
+                              <table class="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
+                                  <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
                                       <tr>
-                                          <th class="py-2 px-4 text-left">ID</th>
-                                          <th class="py-2 px-4 text-left">Email</th>
-                                          <th class="py-2 px-4 text-left">Tên đầy đủ</th>
-                                          <th class="py-2 px-4 text-left">Số điện thoại</th>
-                                          <th class="py-2 px-4 text-left">Vai trò</th>
-                                          <th class="py-2 px-4 text-left">Hoạt động</th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-hashtag mr-2 text-blue-500"></i>ID
+                                          </th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-envelope mr-2 text-green-500"></i>Email
+                                          </th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-user mr-2 text-purple-500"></i>Tên đầy đủ
+                                          </th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-phone mr-2 text-orange-500"></i>Số điện thoại
+                                          </th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-user-tag mr-2 text-indigo-500"></i>Vai trò
+                                          </th>
+                                          <th class="py-4 px-6 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                              <i class="fas fa-cogs mr-2 text-red-500"></i>Hoạt động
+                                          </th>
                                       </tr>
                                   </thead>
-                                  <tbody>
+                                  <tbody class="divide-y divide-gray-200">
                                       <c:forEach var="user" items="${users}">
-                                          <tr class="border-t">
-                                              <td class="py-2 px-4">${user.getId()}</td>
-                                              <td class="py-2 px-4">${user.getEmail()}</td>
-                                              <td class="py-2 px-4">${user.getName()}</td>
-                                              <td class="py-2 px-4">${user.getPhone()}</td>
-                                              <td class="py-2 px-4">${user.getRole()}</td>
-                                              <td class="py-2 px-4 space-x-2 flex items-center justify-between w-[100px]">
-                                                  <a href="/admin/user/${user.getId()}" class="text-white px-3 py-1 rounded">
-                                                    <svg class="w-[20px] h-[20px] hover:fill-blue-700 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
-                                                  </a>
-                                                  <a href="/admin/user/update/${user.getId()}" class=" text-white px-3 py-1 rounded">
-                                                    <svg class="w-[20px] h-[20px] hover:fill-yellow-800 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M352 320c88.4 0 160-71.6 160-160c0-15.3-2.2-30.1-6.2-44.2c-3.1-10.8-16.4-13.2-24.3-5.3l-76.8 76.8c-3 3-7.1 4.7-11.3 4.7L336 192c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l76.8-76.8c7.9-7.9 5.4-21.2-5.3-24.3C382.1 2.2 367.3 0 352 0C263.6 0 192 71.6 192 160c0 19.1 3.4 37.5 9.5 54.5L19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L297.5 310.5c17 6.2 35.4 9.5 54.5 9.5zM80 408a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
-                                                  </a>
-                                                  <!--<a href="/admin/user/delete/${user.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>-->
-                                                  <a href="#" 
-                                                    class="inline-block text-white text-sm font-semibold px-4 py-1 rounded delete-btn"
-                                                    data-user-id="${user.id}"
-                                                    data-user-name="${user.name}">
-                                                    <svg class="w-[20px] h-[20px] hover:fill-red-700 duration-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
-                                                  </a>
+                                          <tr class="table-row">
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                      #${user.getId()}
+                                                  </span>
+                                              </td>
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <div class="flex items-center">
+                                                      <div class="flex-shrink-0 h-8 w-8">
+                                                          <div class="h-8 w-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                                                              <span class="text-white text-sm font-medium">
+                                                                  ${user.getEmail().substring(0,1).toUpperCase()}
+                                                              </span>
+                                                          </div>
+                                                      </div>
+                                                      <div class="ml-3">
+                                                          <div class="text-sm font-medium text-gray-900">${user.getEmail()}</div>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <div class="text-sm font-medium text-gray-900">${user.getName()}</div>
+                                              </td>
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <div class="text-sm text-gray-900">${user.getPhone()}</div>
+                                              </td>
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
+                                                         ${user.getRole() == 'ADMIN' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}">
+                                                      <i class="fas fa-circle mr-1 text-xs"></i>
+                                                      ${user.getRole()}
+                                                  </span>
+                                              </td>
+                                              <td class="py-4 px-6 whitespace-nowrap">
+                                                  <div class="flex items-center space-x-3">
+                                                      <a href="/admin/user/${user.getId()}" 
+                                                         class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 action-btn"
+                                                         title="Xem chi tiết">
+                                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+                                                            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
+                                                        </svg>
+                                                      </a>
+                                                      <a href="/admin/user/update/${user.getId()}" 
+                                                         class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 action-btn"
+                                                         title="Chỉnh sửa">
+                                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                                                            <path d="M352 320c88.4 0 160-71.6 160-160c0-15.3-2.2-30.1-6.2-44.2c-3.1-10.8-16.4-13.2-24.3-5.3l-76.8 76.8c-3 3-7.1 4.7-11.3 4.7L336 192c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l76.8-76.8c7.9-7.9 5.4-21.2-5.3-24.3C382.1 2.2 367.3 0 352 0C263.6 0 192 71.6 192 160c0 19.1 3.4 37.5 9.5 54.5L19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L297.5 310.5c17 6.2 35.4 9.5 54.5 9.5zM80 408a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+                                                        </svg>
+                                                      </a>
+                                                      <a href="#" 
+                                                        class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 action-btn delete-btn"
+                                                        data-user-id="${user.id}"
+                                                        data-user-name="${user.name}"
+                                                        title="Xóa">
+                                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+                                                            <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                        </svg>
+                                                      </a>
+                                                  </div>
                                               </td>
                                           </tr>
                                       </c:forEach>
                                   </tbody>
                               </table>
                           </div>
-       <div class="mt-6 flex justify-center space-x-1">
 
-        <c:forEach begin="1" end="${totalPages}" var="i">
-            <a href="?page=${i}&size=${size}"
-               class="px-3 py-1 rounded 
-                      ${i == currentPage ? 'bg-blue-600 text-white font-bold' : 'bg-gray-200 text-gray-700'} 
-                      hover:bg-blue-400 hover:text-white transition">
-                ${i}
-            </a>
-        </c:forEach>
-    </div>
+                          <!-- Pagination -->
+                          <div class="mt-8">
+                            <div class="flex justify-center items-center space-x-2">
+                                <c:choose>
+                                    <c:when test="${totalPages <= 7}">
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <a href="?page=${i}&size=${size}"
+                                               class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                      ${i == currentPage ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                                ${i}
+                                            </a>
+                                        </c:forEach>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <a href="?page=1&size=${size}"
+                                           class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                  ${currentPage == 1 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">1</a>
+
+                                        <c:if test="${currentPage > 4}">
+                                            <span class="px-3 py-2 text-gray-500">...</span>
+                                        </c:if>
+
+                                        <c:forEach var="i" begin="${currentPage - 1}" end="${currentPage + 1}">
+                                            <c:if test="${i > 1 && i < totalPages}">
+                                                <a href="?page=${i}&size=${size}"
+                                                   class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                          ${i == currentPage ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                                    ${i}
+                                                </a>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages - 3}">
+                                            <span class="px-3 py-2 text-gray-500">...</span>
+                                        </c:if>
+
+                                        <a href="?page=${totalPages}&size=${size}"
+                                           class="pagination-btn px-4 py-2 rounded-lg font-medium transition-all duration-300
+                                                  ${currentPage == totalPages ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}">
+                                            ${totalPages}
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
                       </div>
                     </div>
                 </main>
             </div>
             </div>
+
             <script>
             const dropdownButton = document.getElementById('dropdown');
             const dropdownMenu = document.getElementById('dropdownMenu');
@@ -255,11 +453,8 @@
 
             updateLayout();
             window.addEventListener('resize', updateLayout);
-
-
-
-
         </script>
+
         <script>
           document.addEventListener('DOMContentLoaded', () => {
               document.querySelectorAll('.delete-btn').forEach(btn => {
@@ -268,7 +463,7 @@
                       const userId = this.getAttribute('data-user-id');
                       const userName = this.getAttribute('data-user-name');
           
-                      console.log("Bạn đang xóa:", userName); // Debug tại đây
+                      console.log("Bạn đang xóa:", userName);
             
                       Swal.fire({
                           title: 'Bạn có chắc chắn?',
@@ -287,8 +482,6 @@
                   });
               });
           });
-          </script>
+        </script>
         </body>
         </html>
-
-        

@@ -33,7 +33,7 @@ public class OrderRepository {
             ps.setString(1, java.time.LocalDateTime.now().toString()); // Assuming order_date is a timestamp
             ps.setString(2, paymentMethod);
             ps.setString(3, userAddress);
-            ps.setString(4, "PENDDING"); // Default status
+            ps.setString(4, "Chưa xác nhận"); // Default status
             ps.setBigDecimal(5, totalAmount);
             ps.setInt(6, userId);
             ps.executeUpdate();
@@ -189,6 +189,7 @@ public class OrderRepository {
     return orders;
 }
 
+
 public Order getOrder(int orderId) throws SQLException {
         Order order = null;
         String sql = "SELECT o.id AS order_id, o.order_date, o.status, o.total_amount, " +
@@ -199,7 +200,7 @@ public Order getOrder(int orderId) throws SQLException {
                      "JOIN users u ON o.user_id = u.id " +
                      "JOIN order_item oi ON o.id = oi.order_id " +
                      "JOIN product p ON oi.product_id = p.id " +
-                     "WHERE o.id = ?";
+                     "WHERE o.id = ? ";
 
         // Sử dụng connection pool để lấy kết nối
         try (Connection conn = ConnectionPoolImlp.getInstance().getConnection();
@@ -264,34 +265,44 @@ public Order getOrder(int orderId) throws SQLException {
         return order;  // Trả về đơn hàng với chi tiết đầy đủ
     }
 
-    public long countOrders(String status) throws SQLException {
+   public long countOrders(String status) throws SQLException {
     long count = 0;
     String sql = "SELECT COUNT(DISTINCT o.id) AS total FROM orders o";
 
-    // Nếu có status thì thêm điều kiện WHERE
     if (status != null && !status.trim().isEmpty()) {
         sql += " WHERE o.status = ?";
     }
 
-    try (Connection conn = ConnectionPoolImlp.getInstance().getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        ps = conn.prepareStatement(sql);
 
         if (status != null && !status.trim().isEmpty()) {
             ps.setString(1, status);
         }
 
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                count = rs.getLong("total");
-            }
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            count = rs.getLong("total");
         }
+
     } catch (SQLException e) {
         e.printStackTrace();
-        throw e;
+        throw e; // giữ nguyên throw để xử lý ở tầng gọi
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+        if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+        if (conn != null) ConnectionPoolImlp.getInstance().releaseConnection(conn); // trả về pool
     }
 
     return count;
 }
+
 
     public List<Order> getOrdersByUser(User user) {
         String sql = "SELECT * FROM orders WHERE user_id = ?";
@@ -378,5 +389,78 @@ public Order getOrder(int orderId) throws SQLException {
             }
         }
     }
+
+    public void updateOrderStatus(int orderId, String status) throws SQLException {
+    String sql = "UPDATE orders SET status = ? WHERE id = ?";
+    
+    Connection conn = null;
+    PreparedStatement ps = null;
+
+    try {
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        // Nếu bạn muốn commit thủ công, bạn phải tắt auto commit trước
+        conn.setAutoCommit(false);
+
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, status);
+        ps.setInt(2, orderId);
+
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("✅ Cập nhật trạng thái đơn hàng thành công. ID: " + orderId + ", Status: " + status);
+        } else {
+            System.out.println("⚠️ Không tìm thấy đơn hàng với ID: " + orderId + " để cập nhật.");
+        }
+
+        conn.commit(); // Commit nếu không có lỗi
+
+    } catch (SQLException e) {
+        System.err.println("❌ Lỗi khi cập nhật trạng thái đơn hàng. ID: " + orderId + ", Status: " + status);
+        e.printStackTrace();
+        try {
+            if (conn != null) conn.rollback(); // Rollback nếu có lỗi
+        } catch (SQLException rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+    } finally {
+        // Đóng tài nguyên
+        if (ps != null) try { ps.close(); } catch (SQLException ignore) {}
+        if (conn != null) ConnectionPoolImlp.getInstance().releaseConnection(conn); // Trả connection về pool
+    }
+}
+
+public BigDecimal getTotalAmountOfCompletedOrders() throws SQLException {
+    String sql = "SELECT SUM(total_amount) FROM orders WHERE status = 'Đã hoàn thành'";
+    BigDecimal totalAmount = BigDecimal.ZERO;
+
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = ConnectionPoolImlp.getInstance().getConnection();
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            totalAmount = rs.getBigDecimal(1);
+            if (totalAmount == null) {
+                totalAmount = BigDecimal.ZERO;
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Đóng lần lượt: ResultSet, PreparedStatement
+        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+        if (ps != null) try { ps.close(); } catch (SQLException ignore) {}
+        if (conn != null) ConnectionPoolImlp.getInstance().releaseConnection(conn); // Trả về connection cho pool
+    }
+
+    return totalAmount;
+}
+
+
 
 }

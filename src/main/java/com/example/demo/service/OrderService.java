@@ -13,12 +13,15 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.DTO.CartItemViewDTO;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.VisitLogRepository;
 
 @Service
 public class OrderService {
 
     @Autowired OrderRepository orderRepository;
     @Autowired CartRepository cartRepository;
+    @Autowired
+    private  VisitLogRepository  visitLogRepository;
 
     public boolean createOrder( int userId,  String userName, String userEmail, String userPhone, String userAddress, String paymentMethod, BigDecimal totalAmount , List<CartItemViewDTO> cartItems) {
         if (userId == 0 || cartItems.size() == 0) {
@@ -52,6 +55,8 @@ public class OrderService {
     public List<Order> getOrder(String status,int page,int size) throws SQLException {
         return this.orderRepository.getOrders(status,page,size);
     }
+
+    
     public Order getOrderById(int id) throws SQLException {
        return this.orderRepository.getOrder(id);
     }
@@ -71,4 +76,18 @@ public class OrderService {
         }
         orderRepository.cancelOrder(orderId);
     }
+    public void update(int id,String status) throws SQLException {
+       
+        this.orderRepository.updateOrderStatus(id,status);
+
+
+        }
+        public BigDecimal sum() throws SQLException {
+            return this.orderRepository.getTotalAmountOfCompletedOrders();
+        }
+
+        public int getVisitCountLast30Days() {
+    return this.visitLogRepository.countVisitsInLast30Days();
+}
+
 }

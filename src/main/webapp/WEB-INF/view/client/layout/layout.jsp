@@ -3,7 +3,23 @@
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
         <header class=" w-full h-[110px] bg-white flex lg:px-[175px] md:px-[100px] sm:px-[70px] px-[20px] justify-between items-center border-b-2">
-            <a href = "/homepage" class = "text-[30px] font-bold text-[#79CDCD] drop-shadow-xl">ShopPhone</a>
+           <a href="/homepage" 
+   class="relative text-6xl font-black text-transparent 
+          bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-300 to-teal-200 
+          drop-shadow-[0_0_8px_rgba(127,255,212,0.8)] 
+          hover:drop-shadow-[0_0_15px_rgba(0,255,255,0.9)]
+          transition-all duration-500 ease-in-out
+          before:content-[''] before:absolute before:left-0 before:right-0 
+          before:bottom-[-20%] before:h-[1px] before:bg-gradient-to-r 
+          before:from-cyan-300 before:to-purple-500 
+          before:blur-sm before:opacity-50 before:z-[-1] 
+          after:content-[''] after:absolute after:top-full after:left-0 after:w-full after:h-4
+          after:bg-gradient-to-b after:from-white/20 after:to-transparent after:blur-md after:opacity-30 after:z-[-1]">
+  ShopPhone
+</a>
+
+
+
             <div class ="w-[550px] h-[60px] flex md:justify-between lg:justify-between md:justify-end justify-end  item-center leading-[60px] ">
                 <a class = "hidden lg:block md:block text-[#2F4F4F] font-bold hover:text-red-500" href = "/homepage">Trang chủ</a>
                 <a class = "hidden lg:block md:block text-[#2F4F4F] font-bold hover:text-red-500" href = "/product">Sản phẩm</a>

@@ -134,11 +134,11 @@ public class ProductRepository {
         try {
             connection = ConnectionPoolImlp.getInstance().getConnection(); // Lấy kết nối từ pool
     
-            String sql = "SELECT " +
-                         "p.id, p.name, p.description, p.price, p.stock_quantity, p.image, " +
-                         "b.id AS brand_id, b.name AS brand_name " +
-                         "FROM product p " +
-                         "JOIN brand b ON p.brand_id = b.id";
+            String sql ="SELECT p.id, p.name,p.description, p.price, p.stock_quantity, p.image,p.brand_id, p.is_deleted, " +
+             "b.id AS brand_id, b.name AS brand_name " +
+             "FROM product p " +
+             "JOIN brand b ON p.brand_id = b.id " +
+             "WHERE p.is_deleted = false ";
     
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
