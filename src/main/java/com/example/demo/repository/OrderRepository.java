@@ -344,5 +344,39 @@ public Order getOrder(int orderId) throws SQLException {
             }
         }
     }
+    public void cancelOrder(int orderId) {
+        String sql = "UPDATE orders SET status = 'CANCELED' WHERE id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new RuntimeException("No order found with ID: " + orderId);
+            }
+            connection.commit(); // Commit the transaction
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error canceling order: " + e.getMessage(), e);
+        } finally {
+            // Close resources if necessary
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

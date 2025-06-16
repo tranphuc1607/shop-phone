@@ -19,7 +19,7 @@
         <div class="flex flex-col md:flex-row gap-10">
             <!-- Left: Product Image -->
             <div class="md:w-1/2">
-                <img src="/images/products/${product.image}" class="w-full rounded-lg shadow" alt="${product.name}">
+                <img src="/images/${product.image}" class="w-full rounded-lg shadow" alt="${product.name}">
             </div>
 
             <!-- Right: Product Details -->

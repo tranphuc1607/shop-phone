@@ -65,5 +65,10 @@ public class OrderService {
         }
         return orderRepository.getOrdersByUser(user);
     }
-    
+    public void cancelOrder(int orderId) throws SQLException {
+        if (orderId <= 0) {
+            throw new IllegalArgumentException("Invalid order ID provided");
+        }
+        orderRepository.cancelOrder(orderId);
+    }
 }

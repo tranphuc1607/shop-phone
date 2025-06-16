@@ -28,6 +28,7 @@ public class ProductControler {
                 model.addAttribute("error", "Không tìm thấy sản phẩm");
             }
             model.addAttribute("product", product);
+            //System.out.println("Product: " + product.getImage());
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi khi lấy thông tin sản phẩm: " + e.getMessage());
             return "client/detailProduct/detailProduct";

@@ -14,7 +14,7 @@
 
 <div class="container mx-auto py-10">
     <h2 class="text-3xl font-bold text-gray-700 mb-6">Lịch sử đơn hàng</h2>
-
+    
     <table class="min-w-full text-sm text-left bg-white rounded-lg shadow-md overflow-hidden">
         <thead class="bg-gray-200 text-gray-600 uppercase text-xs">
             <tr>
@@ -27,7 +27,8 @@
         </thead>
         <tbody>
             <c:forEach var="order" items="${orders}">
-                <tr class="border-t hover:bg-gray-50">
+                <tr class="border-t hover:bg-gray-50 cursor-pointer transition-colors duration-200" 
+                    onclick="goToOrderDetail('${order.id}')">
                     <td class="px-6 py-4">
                         <fmt:formatDate value="${order.orderDateAsDate}" pattern="dd-MM-yyyy HH:mm" />
                     </td>
@@ -41,6 +42,19 @@
             </c:forEach>
         </tbody>
     </table>
+    
+    <c:if test="${empty orders}">
+        <div class="text-center py-10">
+            <p class="text-gray-500 text-lg">Bạn chưa có đơn hàng nào.</p>
+        </div>
+    </c:if>
 </div>
+
+<script>
+    function goToOrderDetail(orderId) {
+        window.location.href = '${pageContext.request.contextPath}/order_his/detail?id=' + orderId;
+    }
+</script>
+
 </body>
 </html>
