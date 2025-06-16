@@ -117,7 +117,12 @@ public class Product {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
-	
+	public boolean getIs_deleted() {
+		return is_deleted;
+	}
+	public void setIs_deleted(boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
 	//Constructor
 	
 	public Product(String name, String description, String price, String stockQuantity, String createdAt,

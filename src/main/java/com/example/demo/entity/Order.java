@@ -2,8 +2,9 @@ package com.example.demo.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
-
+import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,9 +42,11 @@ public class Order {
 		return id;
 	}
 
+	public Date getOrderDateAsDate() {
+		return Date.from(orderDate.atZone(ZoneId.systemDefault()).toInstant());
+	}
+
 	
-
-
 	public User getUser() {
 		return user;
 	}

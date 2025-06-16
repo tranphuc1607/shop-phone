@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.entity.User;
 import com.example.demo.entity.Order;
 //import com.example.demo.entity.Order;
 import com.example.demo.entity.DTO.CartItemViewDTO;
@@ -59,4 +59,11 @@ public class OrderService {
      public long getTotalProductCount(String status) throws SQLException {
         return this.orderRepository.countOrders(status);
     }
+    public List<Order> getOrdersByUser(User user) {
+        if (user == null || user.getId() == null) {
+            throw new IllegalArgumentException("Invalid user provided");
+        }
+        return orderRepository.getOrdersByUser(user);
+    }
+    
 }

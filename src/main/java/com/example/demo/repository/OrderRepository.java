@@ -33,7 +33,7 @@ public class OrderRepository {
             ps.setString(1, java.time.LocalDateTime.now().toString()); // Assuming order_date is a timestamp
             ps.setString(2, paymentMethod);
             ps.setString(3, userAddress);
-            ps.setString(4, "Chưa xác nhận"); // Default status
+            ps.setString(4, "PENDDING"); // Default status
             ps.setBigDecimal(5, totalAmount);
             ps.setInt(6, userId);
             ps.executeUpdate();
@@ -293,6 +293,56 @@ public Order getOrder(int orderId) throws SQLException {
     return count;
 }
 
-
+    public List<Order> getOrdersByUser(User user) {
+        String sql = "SELECT * FROM orders WHERE user_id = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = ConnectionPoolImlp.getInstance().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1,user.getId());
+            rs = ps.executeQuery();
+            List<Order> orders = new java.util.ArrayList<>();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setOrderDate(rs.getTimestamp("order_date").toLocalDateTime());
+                order.setPaymentMethod(rs.getString("payment_method"));
+                order.setShippingAddress(rs.getString("shipping_address"));
+                order.setStatus(rs.getString("status"));
+                order.setTotalAmount(rs.getBigDecimal("total_amount"));
+                order.setUser(user);
+                orders.add(order);
+            }
+            return orders;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error retrieving orders: " + e.getMessage(), e);
+        } finally {
+            // Close resources if necessary
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

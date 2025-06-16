@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.entity.Product;
+//import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 

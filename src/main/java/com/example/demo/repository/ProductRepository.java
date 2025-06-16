@@ -355,7 +355,8 @@ public void updateProduct(Product product) throws SQLException {
              "JOIN brand b ON p.brand_id = b.id " +
              "WHERE p.is_deleted = false " +
              "LIMIT ? OFFSET ?";
-    return jdbcTemplate.query(sql, new Object[]{size, offset}, productRowMapper());
+    return  jdbcTemplate.query(sql, productRowMapper(), size, offset);
+    //return jdbcTemplate.query(sql, new Object[]{size, offset}, productRowMapper());
 }
 
 

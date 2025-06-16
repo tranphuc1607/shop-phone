@@ -18,8 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.example.demo.config.ConnectionPoolImlp;
-import com.example.demo.entity.Brand;
-import com.example.demo.entity.Product;
+//import com.example.demo.entity.Brand;
+//import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 // import com.mysql.cj.jdbc.exceptions.MySQLTransactionRollbackException;
 
@@ -341,7 +341,8 @@ public class UserRepository {
     public List<User> findAll(int page, int size) {
         int offset = (page - 1) * size;
         String sql = "SELECT * FROM users LIMIT ? OFFSET ?";
-        return jdbcTemplate.query(sql, new Object[]{size, offset}, userRowMapper());
+        return jdbcTemplate.query(sql, userRowMapper(), size, offset);
+        //return jdbcTemplate.query(sql, new Object[]{size, offset}, userRowMapper());
     }
 
     // Hàm đếm tổng số user

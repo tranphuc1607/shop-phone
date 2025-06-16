@@ -92,6 +92,7 @@
                                           <th class="py-2 px-4 text-left">Địa chỉ</th>
                                           <th class="py-2 px-4 text-left">Ngày-Giờ</th>
                                           <th class="py-2 px-4 text-left">Trạng thái</th>
+                                          <th></th>
                                       </tr>
                                   </thead>
                                   <tbody>

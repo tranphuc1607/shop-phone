@@ -77,7 +77,7 @@
         </c:if>
         <!-- Action buttons -->
             <div class="flex justify-end gap-4 mt-6">
-                <a href="/orders" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                <a href="/order/order-list" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
                     Xem lịch sử đặt hàng
                 </a>
                 <a href="/product" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
