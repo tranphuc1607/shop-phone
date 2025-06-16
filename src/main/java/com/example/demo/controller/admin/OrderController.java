@@ -37,7 +37,7 @@ public class OrderController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
-        return "admin/order/AllOrder/allOrder";
+        return "admin/order/allOrder";
     }
 
     @GetMapping("/admin/order/{id}")
@@ -47,7 +47,7 @@ public class OrderController {
 
     model.addAttribute("order", order);
     model.addAttribute("createdAtDate", createdAtDate); // truyền biến mới
-    return "admin/order/AllOrder/view";
+    return "admin/order/view";
     
     
     }
@@ -66,7 +66,7 @@ public class OrderController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
-        return "admin/order/AllOrderUnconfirm/unconfirmedOrder";
+        return "admin/order/unconfirmedOrder";
 
         
     }

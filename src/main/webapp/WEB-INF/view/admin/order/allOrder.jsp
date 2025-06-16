@@ -63,8 +63,8 @@
         </head>
         <body>
             <div class ="flex h-[100vh]">
-              <jsp:include page="../../layout/header.jsp" />
-              <jsp:include page="../../layout/navbar.jsp" />
+              <jsp:include page="../layout/header.jsp" />
+              <jsp:include page="../layout/navbar.jsp" />
               <div id="content" class="flex-1 pt-[60px] px-[20px] w-full ml-[260px]">
                 <main>
                     <div class="container mx-auto p-4">
@@ -108,7 +108,6 @@
                                               <td class="py-2 px-4 space-x-2">
                                                   <a href="/admin/order/${order.getId()}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">View</a>
                                                   <a href="/admin/product/update/${order.getId()}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Status</a>
-                                                  <a href="/admin/product/delete/${order.getId()}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</a>
                                               </td>
                                           </tr>
                                       </c:forEach>
@@ -116,7 +115,7 @@
                               </table>
                           </div>
       
-                          <div style="margin-top: 10px;">
+                         <div style="margin-top: 10px;">
                             <div class="mt-6 flex justify-center space-x-1">
 
                                 <c:forEach begin="1" end="${totalPages}" var="i">

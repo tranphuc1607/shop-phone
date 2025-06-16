@@ -11,10 +11,11 @@
 // import com.example.demo.entity.Product;
 
 // @Controller
-// public class OrderController {
+// public class OrderControllers {
 //     @GetMapping("/homepage")
-//     public String getOrder(@RequestParam(defaultValue = "1") int page,
-       
+//     public String getOrder(@RequestParam(defaultValue = "1") int page) {
+
 //         return "client/home/interface";
+//     }
 //     }
 // // }
